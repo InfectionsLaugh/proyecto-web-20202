@@ -62,7 +62,10 @@ En la tabla se describe la funcionalidad de cada carpeta.
 | **main.sass** | Archivo donde se recopilan todos los archivos de estilo de las carpetas anteriores. Este archivo no contiene código como tal, solamente directivas @include. Este es el archivo que usaremos en nuestro proyecto al ser compilado.|
 ## Compilación de SASS
 ---
-Solamente hay que correr el script llamado ***sass.bat***  y esto nos generará el archivo ***main.css*** dentro de la carpeta ***css***. Hay que asegurarse de que tenemos SASS descargado y en el PATH, de lo contrario marcará un error indicando que no encuentra SASS.
+Para compilar el SASS y generar el archivo CSS solamente hay que ejecutar el siguiente comando:
+`sass_comp [watch | build]`
+1. ***watch***: compila el SASS a CSS pero se queda activo esperando cambios en el SASS y recompila al guardar.
+2. ***build***: compila el SASS a CSS; no se queda esperando cambios.
 ## Estructura del proyecto de JavaScript
 ---
 TBA
