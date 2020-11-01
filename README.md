@@ -63,7 +63,9 @@ En la tabla se describe la funcionalidad de cada carpeta.
 ## Compilación de SASS
 ---
 Para compilar el SASS y generar el archivo CSS solamente hay que ejecutar el siguiente comando:
-`sass_comp [watch | build]`
+```bash
+sass_comp [watch | build]
+```
 1. ***watch***: compila el SASS a CSS pero se queda activo esperando cambios en el SASS y recompila al guardar.
 2. ***build***: compila el SASS a CSS; no se queda esperando cambios.
 ## Estructura del proyecto de JavaScript
