@@ -1,0 +1,21 @@
+.formL {
+	width: 50% !important;
+	padding-top: 40px;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+}
+i {
+	margin-right: 10px;
+}
+
+.login-avatar{
+	color: #B1B5E6;
+	font-size: 80px;
+}
+
+
+
+
