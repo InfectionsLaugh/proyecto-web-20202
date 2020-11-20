@@ -1,0 +1,23 @@
+.icon
+    display: inline-block
+    width: 20px
+    height: 20px
+    background: white
+    -webkit-mask-size: cover
+    transition: all 0.3s ease
+
+.icon:hover,
+.icon:focus
+    background: map-get($colors, "primary")
+    
+.icon-quarter-note
+    -webkit-mask-image: url('../img/quarter-note.svg')
+
+.icon-eighth-note
+    -webkit-mask-image: url('../img/eighth-note.svg')
+
+.icon-sixteenth-note
+    -webkit-mask-image: url('../img/sixteenth-note.svg')
+
+.icon-thirty-second-note
+    -webkit-mask-image: url('../img/thirty-second-note.svg')

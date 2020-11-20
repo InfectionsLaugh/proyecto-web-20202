@@ -1,29 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Markazi+Text&display=swap')
-@import '../utils/variables'
-
 body
-    font-family: $font-family
-    color: $font-primary-color
-    font-size: $font-size-l
+    font-family: $font-family-default
+    // color: map-get($colors, "primary")
+    font-size: $font-size-lg
 
-h1, h2, h3,
-h4, h5, h6 
-    font-weight: bold
-
-h1
-    font-size: $font-size-xl
-
-h2
-    font-size: $font-size-l
-
-h3
-    font-size: $font-size-m
-
-h4
-    font-size: $font-size-s
-
-h5
-    font-size: $font-size-xs
-
-h6
-    font-size: $font-size-xxs
+@each $header, $value in $headings_size 
+    .#{$header}
+        font-weight: bold
+        color: white
+        font-size: map-get($headings_size, $header)

@@ -1,0 +1,25 @@
+// Colores principales usados por la aplicación
+$colors: (
+    "primary" : #5161CE,
+    "secondary" : #29BAD3,
+    "success" : #2FAB17,
+    "danger" : #CE1212,
+    "warning" : #D8C318,
+    "info" : #4baea0,
+    "focus" : #9c33ff,
+    "lighter" : #fff,
+    "light" : #f8f9fa,
+    "gray" : #adb5bd,
+    "dark" : #343f85,
+    "black" : #000,
+    "transparent": transparent
+);
+
+$headings_size : (
+    "h1": $font-size-base * 2.5,
+    "h2": $font-size-base * 2,
+    "h3": $font-size-base * 1.75,
+    "h4": $font-size-base * 1.5,
+    "h5": $font-size-base * 1.25,
+    "h6": $font-size-base,
+)

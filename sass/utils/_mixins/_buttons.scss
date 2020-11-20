@@ -1,0 +1,28 @@
+@mixin background-button(
+    $background-color, 
+    $border-color,
+    $color: get-color-yiq($background-color),
+    $hover-background: darken($background-color, 7.5%),
+    $hover-border: darken($border-color, 10%),
+    $hover-color: get-color-yiq($hover-background),
+    $active-background: darken($background-color, 10%),
+    $active-border: darken($border-color, 12.5%),
+    $active-color: get-color-yiq($active-background)  
+) {
+    color: $color;
+    border: none;
+    border-color: $border-color;
+
+    &:hover {
+        color: $hover-color;
+        border-color: $hover-border;
+        background-color: $hover-border;
+    }
+
+    &:focus,
+    &.focus {
+        color: $hover-color;
+        border-color: $hover-border;
+        background-color: $hover-border;
+    }
+}

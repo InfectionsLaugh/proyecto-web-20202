@@ -1,0 +1,3 @@
+@each $color, $value in $colors
+    .#{$color}
+        background-color: map-get($colors, $color)
