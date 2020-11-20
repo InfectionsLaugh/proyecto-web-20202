@@ -103,4 +103,39 @@ window.onload = function () {
             MIDI.noteOff(0, note, delay + 0.75);
         }
     });
+
+    $('.open-login').click(function (e) {
+        $('#login-form').addClass('slidein');
+        $('#login-form').one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function (event) {
+            $(this).removeClass('slidein')
+        });
+        $('#login-form').css('z-index', '9999');
+        $('#login-form').css('opacity', '1');
+        $('.overlay').css('z-index', '9998');
+        $('.overlay').attr('id', 'login');
+    });
+
+    $('.open-register').click(function (e) {
+        $('#register-form').addClass('slidein');
+        $('#register-form').one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function (event) {
+            $(this).removeClass('slidein')
+        });
+        $('#register-form').css('z-index', '9999');
+        $('#register-form').css('opacity', '1');
+        $('.overlay').css('z-index', '9998');
+        $('.overlay').attr('id', 'register');
+    });
+
+    $('.overlay').click(function (e) {
+        var id = $(this).attr('id');
+        console.log(id);
+        $('#' + id + '-form').addClass('slideout');
+        $('#' + id + '-form').one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function (event) {
+            $(this).removeClass('slideout')
+            $('#' + id + '-form').css('z-index', '-1');
+            $('#' + id + '-form').css('opacity', '0');
+            $('.overlay').css('z-index', '-1');
+        });
+        console.log('dasda');
+    });
 };

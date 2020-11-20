@@ -7,9 +7,9 @@
     <title>Saludos</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="style.css"> 
-    <link rel="stylesheet" href="css/navbar.css"> 
-    
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/navbar.css">
 
     <!-- polyfill -->
     <script src="js/inc/shim/Base64.js" type="text/javascript"></script>
@@ -25,87 +25,6 @@
     <!-- utils -->
     <script src="js/util/dom_request_xhr.js" type="text/javascript"></script>
     <script src="js/util/dom_request_script.js" type="text/javascript"></script>
-<<<<<<< HEAD
-    <!-- Font Awesome -->
-    <script src="https://kit.fontawesome.com/8d1ff92fea.js" crossorigin="anonymous"></script>
-</head>
-
-<body>
-    <div class="container">
-        <div id="header">
-            <nav class="nav primary">
-                <div class="banner">
-                    <img src="img/logo.png" alt="">
-                    <h3 class="h3">Pianos chidos</h3>
-                </div>
-                <div class="links">
-                    <a class="btn btn-primary" href="#">Iniciar sesión</a>
-                    <a class="btn btn-primary" href="#">Registro</a>
-                </div>
-            </nav>
-            <nav class="sequence-nav dark">
-                <div class="song-info">
-                    <label for="">Nombre:</label>
-                    <input type="text" name="song_name" id="song-name">
-                    <a class="btn btn-transparent" href="#"><i class="fas fa-save"></i></a>
-                    <a class="btn btn-transparent" href="#"><i class="fas fa-play-circle"></i></a>
-                    <a class="btn btn-transparent" href="#"><i class="fas fa-stop"></i></a>
-                </div>
-                <div class="instrument-list">
-                    <label for="">Instrumento:</label>
-                    <select id="instruments">
-                        <option value="acoustic_grand_piano">Piano</option>
-                        <option value="viola">Viola</option>
-                        <option value="acoustic_guitar_nylon">Guitarra</option>
-                        <option value="synth_drum">Percusión</option>
-                    </select>
-                </div>
-                <div class="tempo">
-                    <a class="btn btn-transparent" href="#">
-                        <span class="icon icon-quarter-note" alt=""></span>
-                    </a>
-                    <a class="btn btn-transparent" href="#">
-                        <span class="icon icon-eighth-note" alt=""></span>
-                    </a>
-                    <a class="btn btn-transparent" href="#">
-                        <span class="icon icon-sixteenth-note" alt=""></span>
-                    </a>
-                    <a class="btn btn-transparent" href="#">
-                        <span class="icon icon-thirty-second-note" alt=""></span>
-                    </a>
-                </div>
-            </nav>
-        </div>
-
-        <div class="main">
-            <div id="keys">
-                <span class="key"></span>
-                <span class="key"></span>
-                <span class="key"></span>
-                <span class="key"></span>
-                <span class="key"></span>
-                <span class="key"></span>
-                <span class="key"></span>
-                <span class="key"></span>
-                <span class="key"></span>
-                <span class="key"></span>
-                <span class="key"></span>
-                <span class="key"></span>
-                <span class="key"></span>
-                <span class="key"></span>
-                <span class="key"></span>
-                <span class="key"></span>
-                <span class="key"></span>
-                <span class="key"></span>
-                <span class="key"></span>
-                <span class="key"></span>
-            </div>
-            <div id="sequencer">
-
-            </div>
-        </div>
-    </div>
-=======
 
     <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
@@ -118,7 +37,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background:  #878787;
+            background: #878787;
             opacity: 0;
             display: none;
             position: absolute;
@@ -136,38 +55,151 @@
 
 <body>
 
-  <nav class="navbar navbar-expand-lg navbar-mainbg">
-    <a class="navbar-brand navbar-logo" href="">Cimapiano</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <i class="fas fa-bars text-white"></i>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ml-auto">
-            <div class="hori-selector"><div class="left"></div><div class="right"></div></div>
-            <li class="nav-item active">
-                <a class="nav-link" href="javascript:void(0);"><i class="fas fa-house-user"></i>Inicio</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="javascript:void(0);"><i class="fas fa-music"></i>Piano</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="javascript:void(0);"><i class="far fa-folder-open"></i>Biblioteca</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="javascript:void(0);"><i class="fas fa-sign-out-alt"></i>Cerrar Sesion</a>
-            </li>
-        </ul>
-    </div>
-</nav>
+    <nav class="navbar navbar-expand-lg navbar-mainbg">
+        <a class="navbar-brand navbar-logo" href="">
+            <img src="img/logo.png" width="30" height="30" loading="lazy" alt="">
+            Cimapiano
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars text-white"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <div class="hori-selector">
+                    <div class="left"></div>
+                    <div class="right"></div>
+                </div>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#"><i class="fas fa-house-user"></i>Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="fas fa-music"></i>Piano</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="far fa-folder-open"></i>Biblioteca</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link open-login" href="#"><i class="fas fa-sign-in-alt"></i>Iniciar Sesion</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link open-register" href="#"><i class="fas fa-user-plus"></i>Registrarse</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
-    <p class='clickable' style="color:#ffffff;">Presiona una tecla para tocar música</p>
-    <select id="instruments">
-        <option value="acoustic_grand_piano">Piano</option>
-        <option value="viola">Viola</option>
-        <option value="acoustic_guitar_nylon">Guitarra</option>
-        <option value="synth_drum">Percusión</option>
-    </select>
->>>>>>> f01aef41dc1bd45937ff7f80928b002b0ec30d65
+    <nav class="navbar navbar-light bg-dark">
+        <div class="row no-gutters flex-grow-1">
+            <div class="col-sm">
+                <form class="form-inline">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success"><i class="fas fa-save fa-2x mr-0"></i></button>
+                    <button class="btn btn-outline-success"><i class="far fa-play-circle fa-2x mr-0"></i></button>
+                    <button class="btn btn-outline-success"><i class="fas fa-stop fa-2x mr-0"></i></button>
+                </form>
+            </div>
+            <div class="col-sm justify-content-center d-flex">
+                <label class="navbar-text text-light" for="">Instrumento: </label>
+                <select id="instruments">
+                    <option value="acoustic_grand_piano">Piano</option>
+                    <option value="viola">Viola</option>
+                    <option value="acoustic_guitar_nylon">Guitarra</option>
+                    <option value="synth_drum">Percusión</option>
+                </select>
+            </div>
+            <div class="col-sm justify-content-center d-flex">
+                <label class="navbar-text text-light" for="">Tempo: </label>
+                <span class="navbar-text icon icon-quarter-note"></span>
+                <span class="navbar-text icon icon-eighth-note"></span>
+                <span class="navbar-text icon icon-sixteenth-note"></span>
+                <span class="navbar-text icon icon-thirty-second-note"></span>
+            </div>
+        </div>
+    </nav>
+
+    <div id="piano" class="row height-100 no-gutters overflow-auto">
+    </div>
+
+    <div class="overlay"></div>
+
+    <main id="register-form" class="d-flex align-items-center py-3 py-md-0">
+        <div class="container formL">
+            <div class="card login-card">
+                <div class="row no-gutters">
+                    <div class="col-md-5">
+                        <img src="images/piano-login.jpg" alt="login" class="login-card-img">
+                    </div>
+                    <div class="col-md-7">
+                        <div class="card-body">
+                            <p class="login-card-description">Regístrate gratis</p>
+                            <form action="#!">
+                                <div class="form-group">
+                                    <label for="nombre" class="sr-only">Nombre</label>
+                                    <input type="nombre" name="nombre" id="nombre" class="form-control"
+                                        placeholder="Nombre">
+                                </div>
+                                <div class="form-group">
+                                    <label for="usuario" class="sr-only">Usuario</label>
+                                    <input type="usuario" name="usuario" id="usuario" class="form-control"
+                                        placeholder="Usuario">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email" class="sr-only">Correo electrónico</label>
+                                    <input type="email" name="email" id="email" class="form-control"
+                                        placeholder="Correo electrónico">
+                                </div>
+                                <div class="form-group mb-4">
+                                    <label for="password" class="sr-only">Contraseña</label>
+                                    <input type="password" name="password" id="password" class="form-control"
+                                        placeholder="***********">
+                                </div>
+                                <input name="login" id="login" class="btn btn-block login-btn mb-4" type="button"
+                                    value="Unirse">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <main id="login-form" class="d-flex align-items-center py-3 py-md-0">
+        <div class="container formL">
+            <div class="card login-card">
+                <div class="row no-gutters">
+                    <div class="col-md-5">
+                        <img src="images/piano-login.jpg" alt="login" class="login-card-img">
+                    </div>
+                    <div class="col-md-7">
+                        <div class="card-body">
+                            <i class="fas fa-user-circle login-avatar"></i>
+                            <p class="login-card-description" style=>Inicia sesión</p>
+                            <form action="#!">
+                                <div class="form-group">
+                                    <label for="usuario" class="sr-only">Usuario</label>
+                                    <input type="usuario" name="usuario" id="usuario" class="form-control"
+                                        placeholder="Usuario">
+                                </div>
+                                <div class="form-group mb-4">
+                                    <label for="password" class="sr-only">Contraseña</label>
+                                    <input type="password" name="password" id="password" class="form-control"
+                                        placeholder="***********">
+                                </div>
+                                <input name="login" id="login" class="btn btn-block login-btn mb-4" type="button"
+                                    value="Ingresar">
+                            </form>
+                            <a href="#!" class="forgot-password-link">¿Olvidaste tu contraseña?</a>
+                            <p class="login-card-footer-text">¿No tienes una cuenta? <a href="#!"
+                                    class="text-reset">¡Regístrate aquí!</a></p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
 
     <div class="modal" id="wait-modal">
         <span>Cargando...</span>
@@ -176,6 +208,7 @@
     <script src="js/jquery.js"></script>
     <script src="js/p5.min.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/piano.js"></script>
 </body>
 
 </html>
