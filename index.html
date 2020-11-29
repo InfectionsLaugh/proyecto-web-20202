@@ -55,7 +55,7 @@
 
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-mainbg">
+    <nav class="navbar navbar-expand-lg navbar-mainbg z-1000">
         <a class="navbar-brand navbar-logo" href="">
             <img src="img/logo.png" width="30" height="30" loading="lazy" alt="">
             Cimapiano
@@ -89,15 +89,15 @@
         </div>
     </nav>
 
-    <nav class="navbar navbar-light bg-dark">
+    <nav class="navbar navbar-light bg-dark z-1000">
         <div class="row no-gutters flex-grow-1">
             <div class="col-sm">
-                <form class="form-inline">
+                <div class="form-inline">
                     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success"><i class="fas fa-save fa-2x mr-0"></i></button>
                     <button class="btn btn-outline-success"><i class="far fa-play-circle fa-2x mr-0"></i></button>
                     <button class="btn btn-outline-success"><i class="fas fa-stop fa-2x mr-0"></i></button>
-                </form>
+                </div>
             </div>
             <div class="col-sm justify-content-center d-flex">
                 <label class="navbar-text text-light" for="">Instrumento: </label>
@@ -119,6 +119,9 @@
     </nav>
 
     <div id="piano" class="row height-100 no-gutters overflow-auto">
+        <div id="keys"></div>
+        <div id="main-sequencer">
+        </div>
     </div>
 
     <div class="overlay"></div>
@@ -208,7 +211,7 @@
     <script src="js/jquery.js"></script>
     <script src="js/p5.min.js"></script>
     <script src="js/main.js"></script>
-    <script src="js/piano.js"></script>
+    <!-- <script src="js/piano.js"></script> -->
 </body>
 
 </html>
