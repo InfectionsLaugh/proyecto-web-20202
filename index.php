@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -60,8 +64,7 @@
             <img src="img/logo.png" width="30" height="30" loading="lazy" alt="">
             Cimapiano
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <i class="fas fa-bars text-white"></i>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -71,20 +74,26 @@
                     <div class="right"></div>
                 </div>
                 <li class="nav-item active">
-                    <a class="nav-link" href="#"><i class="fas fa-house-user"></i>Inicio</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fas fa-music"></i>Piano</a>
+                    <a class="nav-link" href="#"><i class="fas fa-music"></i>Inicio</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#"><i class="far fa-folder-open"></i>Biblioteca</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link open-login" href="#"><i class="fas fa-sign-in-alt"></i>Iniciar Sesion</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link open-register" href="#"><i class="fas fa-user-plus"></i>Registrarse</a>
-                </li>
+                <?php if (isset($_SESSION["user_name"])) { ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="home.php" id="userDropdownBtn"><i class="fas fa-user"></i><?= $_SESSION["user_name"] ?></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="logout"><i class="fas fa-sign-out-alt"></i>Cerrar Sesión</a>
+                    </li>
+                <?php } else { ?>
+                    <li class="nav-item">
+                        <a class="nav-link open-login" href="#"><i class="fas fa-sign-in-alt"></i>Iniciar Sesion</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link open-register" href="#"><i class="fas fa-user-plus"></i>Registrarse</a>
+                    </li>
+                <?php } ?>
             </ul>
         </div>
     </nav>
@@ -94,9 +103,9 @@
             <div class="col-sm">
                 <div class="form-inline">
                     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success"><i class="fas fa-save fa-2x mr-0"></i></button>
-                    <button class="btn btn-outline-success"><i class="far fa-play-circle fa-2x mr-0"></i></button>
-                    <button class="btn btn-outline-success"><i class="fas fa-stop fa-2x mr-0"></i></button>
+                    <button class="btn btn-outline-success" id="song-save"><i class="fas fa-save fa-2x mr-0"></i></button>
+                    <button class="btn btn-outline-success" id="song-play"><i class="far fa-play-circle fa-2x mr-0"></i></button>
+                    <button class="btn btn-outline-success" id="song-stop"><i class="fas fa-stop fa-2x mr-0"></i></button>
                 </div>
             </div>
             <div class="col-sm justify-content-center d-flex">
@@ -119,8 +128,12 @@
     </nav>
 
     <div id="piano" class="row height-100 no-gutters overflow-auto">
+        <div id="playhead-wrapper">
+            <div id="playhead"></div>
+        </div>
         <div id="keys"></div>
         <div id="main-sequencer">
+            <div id="playhead-line"></div>
         </div>
     </div>
 
@@ -139,26 +152,21 @@
                             <form action="#!">
                                 <div class="form-group">
                                     <label for="nombre" class="sr-only">Nombre</label>
-                                    <input type="nombre" name="nombre" id="nombre" class="form-control"
-                                        placeholder="Nombre">
+                                    <input type="nombre" name="sign-up-name" id="sign-up-name" class="form-control" placeholder="Nombre">
                                 </div>
                                 <div class="form-group">
                                     <label for="usuario" class="sr-only">Usuario</label>
-                                    <input type="usuario" name="usuario" id="usuario" class="form-control"
-                                        placeholder="Usuario">
+                                    <input type="usuario" name="sign-up-user" id="sign-up-user" class="form-control" placeholder="Usuario">
                                 </div>
                                 <div class="form-group">
                                     <label for="email" class="sr-only">Correo electrónico</label>
-                                    <input type="email" name="email" id="email" class="form-control"
-                                        placeholder="Correo electrónico">
+                                    <input type="email" name="sign-up-email" id="sign-up-email" class="form-control" placeholder="Correo electrónico">
                                 </div>
                                 <div class="form-group mb-4">
                                     <label for="password" class="sr-only">Contraseña</label>
-                                    <input type="password" name="password" id="password" class="form-control"
-                                        placeholder="***********">
+                                    <input type="password" name="sign-up-password" id="sign-up-password" class="form-control" placeholder="***********">
                                 </div>
-                                <input name="login" id="login" class="btn btn-block login-btn mb-4" type="button"
-                                    value="Unirse">
+                                <input name="sign-up" id="sign-up" class="btn btn-block login-btn mb-4" type="button" value="Unirse">
                             </form>
                         </div>
                     </div>
@@ -181,20 +189,18 @@
                             <form action="#!">
                                 <div class="form-group">
                                     <label for="usuario" class="sr-only">Usuario</label>
-                                    <input type="usuario" name="usuario" id="usuario" class="form-control"
-                                        placeholder="Usuario">
+                                    <input type="usuario" name="login-user" id="login-user" class="form-control" placeholder="Usuario">
                                 </div>
                                 <div class="form-group mb-4">
                                     <label for="password" class="sr-only">Contraseña</label>
-                                    <input type="password" name="password" id="password" class="form-control"
-                                        placeholder="***********">
+                                    <input type="password" name="login-password" id="login-password" class="form-control" placeholder="***********">
                                 </div>
-                                <input name="login" id="login" class="btn btn-block login-btn mb-4" type="button"
-                                    value="Ingresar">
+                                <input name="login" id="login" class="btn btn-block login-btn mb-4" type="button" value="Ingresar">
                             </form>
+                            <div id="success">Bienvenido mi lord</div>
+                            <div id="failure">Regístrate, sucio pagano</div>
                             <a href="#!" class="forgot-password-link">¿Olvidaste tu contraseña?</a>
-                            <p class="login-card-footer-text">¿No tienes una cuenta? <a href="#!"
-                                    class="text-reset">¡Regístrate aquí!</a></p>
+                            <p class="login-card-footer-text">¿No tienes una cuenta? <a href="#!" class="text-reset">¡Regístrate aquí!</a></p>
 
                         </div>
                     </div>
@@ -210,6 +216,7 @@
 
     <script src="js/jquery.js"></script>
     <script src="js/p5.min.js"></script>
+    <script src="js/login.js"></script>
     <script src="js/main.js"></script>
     <!-- <script src="js/piano.js"></script> -->
 </body>

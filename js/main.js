@@ -19,6 +19,8 @@ var blacks = [
     94, 97, 99, 102, 104, 106
 ];
 
+var bpm = 60;
+
 var key_names = [
     'A0', 'A#0', 'B0',
     'C1', 'C#1', 'D1', 'C#1', 'E1', 'F1', 'F#1', 'G1', 'G#1', 'A1', 'A#1', 'B1',
@@ -40,6 +42,7 @@ function clickableGrid(rows, cols, callback) {
     var i = 0;
     var grid = document.createElement('table');
     grid.className = 'grid';
+    grid.id = 'sequencer'
     for (var r = 0; r < rows; ++r) {
         var tr = grid.appendChild(document.createElement('tr'));
         for (var c = 0; c < cols; ++c) {
@@ -67,7 +70,7 @@ window.onload = function () {
             $('#keys').append('<div data-note="' + keys[i] + '" class="key">' + key_names[i] + '</div>');
     }
 
-    var grid = clickableGrid(keys.length, 35, function (el, row, col, i) {
+    var grid = clickableGrid(keys.length, 45, function (el, row, col, i) {
         delay = 0; // play one note every quarter second
         note = $(el).data('note'); // the MIDI note
         velocity = 127; // how hard the note hits
@@ -77,12 +80,68 @@ window.onload = function () {
         MIDI.noteOff(0, note, delay + 0.75);
 
         $(el).toggleClass('clicked');
-        
-        if($(el).hasClass('clicked'))
+
+        if ($(el).hasClass('clicked'))
             $(el).html($(el).data('note-name'));
         else
             $(el).html('');
     });
+
+    var x = -30;
+    var y = 0;
+
+    var playStop;
+
+    $('#song-play').click(function (e) {
+        var sequencer = document.getElementById('sequencer');
+        var seq_len = sequencer.rows[0].cells.length;
+        var j = 0;
+
+        $('#playhead').css('display', 'block');
+        $('#playhead-line').css('display', 'block');
+
+        playStop = setInterval(function (e) {
+            console.log(((bpm / 60) / 4) * 1000);
+            console.log(sequencer.rows.length);
+            $('#playhead').css('transform', 'translateX(' + x + 'px)');
+            $('#playhead-line').css('transform', 'translateX(' + y + 'px)');
+
+            if (x >= 24 * 45) {
+                j = 0;
+                x = -30;
+            }
+
+            if (y >= 25 * 45)
+                y = 0;
+
+            x += 25;
+            y += 25;
+
+            for (var i = 0; i < sequencer.rows.length; i++) {
+                if ($(sequencer.rows[i].cells[j]).hasClass('clicked')) {
+                    delay = 0; // play one note every quarter second
+                    note = $(sequencer.rows[i].cells[j]).data('note'); // the MIDI note
+                    velocity = 127; // how hard the note hits
+                    // play the note
+                    MIDI.setVolume(0, 127);
+                    MIDI.noteOn(0, note, velocity, delay);
+                    MIDI.noteOff(0, note, delay + 0.75);
+                }
+            }
+
+            j++;
+        }, ((bpm / 60) / 4) * 1000);
+    });
+
+    $('#song-stop').click(function (e) {
+        $('#playhead').css('display', 'none');
+        $('#playhead-line').css('display', 'none');
+        $('#playhead').css('transform', 'translateX(-30px)');
+        $('#playhead-line').css('transform', 'translateX(0)');
+        x = -30;
+        y = 0;
+        clearInterval(playStop);
+    })
 
     document.getElementById('main-sequencer').appendChild(grid);
 
