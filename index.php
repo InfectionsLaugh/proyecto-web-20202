@@ -109,20 +109,28 @@ session_start();
                 </div>
             </div>
             <div class="col-sm justify-content-center d-flex">
-                <label class="navbar-text text-light" for="">Instrumento: </label>
-                <select id="instruments">
-                    <option value="acoustic_grand_piano">Piano</option>
-                    <option value="viola">Viola</option>
-                    <option value="acoustic_guitar_nylon">Guitarra</option>
-                    <option value="synth_drum">Percusión</option>
-                </select>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Instrumento
+                    </button>
+                    <div class="dropdown-menu scrollable-menu" aria-labelledby="dropdownMenu2">
+                        <h6 class="dropdown-header">Piano</h6>
+                        <a class="dropdown-item instrument-option" data-instrument="acoustic_grand_piano" href="#">Grand Piano</a>
+                        <a class="dropdown-item instrument-option" data-instrument="electric_piano_1" href="#">Electric Piano</a>
+                        <a class="dropdown-item instrument-option" data-instrument="harpsichord" href="#">Harpsichord</a>
+                        <a class="dropdown-item instrument-option" data-instrument="music_box" href="#">Music Box</a>
+                        <h6 class="dropdown-header">Orquesta</h6>
+                        <a class="dropdown-item instrument-option" data-instrument="violin" href="#">Violin</a>
+                        <h6 class="dropdown-header">Guitarra</h6>
+                        <a class="dropdown-item instrument-option" data-instrument="acoustic_guitar_nylon" href="#">Guitar</a>
+                        <h6 class="dropdown-header">Percusión</h6>
+                        <a class="dropdown-item instrument-option" data-instrument="synth_drum" href="#">Synth Drum</a>
+                    </div>
+                </div>
             </div>
             <div class="col-sm justify-content-center d-flex">
-                <label class="navbar-text text-light" for="">Tempo: </label>
-                <span class="navbar-text icon icon-quarter-note"></span>
-                <span class="navbar-text icon icon-eighth-note"></span>
-                <span class="navbar-text icon icon-sixteenth-note"></span>
-                <span class="navbar-text icon icon-thirty-second-note"></span>
+                <label class="navbar-text text-light" for="">BPM: </label>
+                <input class="form-control mr-sm-2" type="text" id="bpm-text" placeholder="" aria-label="Search">
             </div>
         </div>
     </nav>

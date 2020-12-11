@@ -58,6 +58,7 @@ function clickableGrid(rows, cols, callback) {
 }
 
 window.onload = function () {
+    $('#bpm-text').val(bpm);
     var instrument = 'acoustic_grand_piano';
     var note = 0;
     var delay = 0;
@@ -96,13 +97,13 @@ window.onload = function () {
         var sequencer = document.getElementById('sequencer');
         var seq_len = sequencer.rows[0].cells.length;
         var j = 0;
+        var time = (1 / (bpm / 60) * 1000) / 4;
+        console.log('tiempo:' , time);
 
         $('#playhead').css('display', 'block');
         $('#playhead-line').css('display', 'block');
 
         playStop = setInterval(function (e) {
-            console.log(((bpm / 60) / 4) * 1000);
-            console.log(sequencer.rows.length);
             $('#playhead').css('transform', 'translateX(' + x + 'px)');
             $('#playhead-line').css('transform', 'translateX(' + y + 'px)');
 
@@ -130,7 +131,7 @@ window.onload = function () {
             }
 
             j++;
-        }, ((bpm / 60) / 4) * 1000);
+        }, time);
     });
 
     $('#song-stop').click(function (e) {
@@ -182,9 +183,50 @@ window.onload = function () {
         })
     }
 
-    $('#instruments').change(function (e) {
+    $('#bpm-text').keydown(function (e) {
+        if (e.which == 13) {
+            clearInterval(playStop);
+            bpm = $(this).val();
+            var time = (1 / (bpm / 60) * 1000) / 4;
+            console.log('tiempo enter:', time);
+            var j = 0;
+
+            playStop = setInterval(function (e) {
+                $('#playhead').css('transform', 'translateX(' + x + 'px)');
+                $('#playhead-line').css('transform', 'translateX(' + y + 'px)');
+
+                if (x >= 24 * 45) {
+                    j = 0;
+                    x = -30;
+                }
+
+                if (y >= 25 * 45)
+                    y = 0;
+
+                x += 25;
+                y += 25;
+
+                for (var i = 0; i < sequencer.rows.length; i++) {
+                    if ($(sequencer.rows[i].cells[j]).hasClass('clicked')) {
+                        delay = 0; // play one note every quarter second
+                        note = $(sequencer.rows[i].cells[j]).data('note'); // the MIDI note
+                        velocity = 127; // how hard the note hits
+                        // play the note
+                        MIDI.setVolume(0, 127);
+                        MIDI.noteOn(0, note, velocity, delay);
+                        MIDI.noteOff(0, note, delay + 0.75);
+                    }
+                }
+
+                j++;
+            }, time);
+        }
+    });
+
+    $('.instrument-option').click(function (e) {
         console.log('asda');
-        loadInstrument($('#instruments').val());
+        loadInstrument($(this).data('instrument'));
+        $('#dropdownMenu2').text($(this).text());
     });
 
     $('.open-login').click(function (e) {
