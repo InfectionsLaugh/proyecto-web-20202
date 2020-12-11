@@ -57,6 +57,21 @@ function clickableGrid(rows, cols, callback) {
     return grid;
 }
 
+function clearSequencer(){
+    var sequencer = document.getElementById('sequencer');
+    var seq_len = sequencer.rows[0].cells.length;
+
+    // clear any notes clicked in the sequencer
+    for(var i = 0; i < sequencer.rows.length; i++){
+        for (var j = 0; j < seq_len; j++) {
+            if ($(sequencer.rows[i].cells[j]).hasClass('clicked')) {
+                $(sequencer.rows[i].cells[j]).toggleClass('clicked');
+                $(sequencer.rows[i].cells[j]).html('');
+            }
+        }
+    }
+}
+
 window.onload = function () {
     var instrument = 'acoustic_grand_piano';
     var note = 0;
@@ -101,8 +116,8 @@ window.onload = function () {
         $('#playhead-line').css('display', 'block');
 
         playStop = setInterval(function (e) {
-            console.log(((bpm / 60) / 4) * 1000);
-            console.log(sequencer.rows.length);
+            // console.log(((bpm / 60) / 4) * 1000);
+            // console.log(sequencer.rows.length);
             $('#playhead').css('transform', 'translateX(' + x + 'px)');
             $('#playhead-line').css('transform', 'translateX(' + y + 'px)');
 
@@ -117,6 +132,7 @@ window.onload = function () {
             x += 25;
             y += 25;
 
+            // console.log("Column: "+j);
             for (var i = 0; i < sequencer.rows.length; i++) {
                 if ($(sequencer.rows[i].cells[j]).hasClass('clicked')) {
                     delay = 0; // play one note every quarter second
@@ -126,6 +142,7 @@ window.onload = function () {
                     MIDI.setVolume(0, 127);
                     MIDI.noteOn(0, note, velocity, delay);
                     MIDI.noteOff(0, note, delay + 0.75);
+                    // console.log(note);
                 }
             }
 
@@ -141,6 +158,49 @@ window.onload = function () {
         x = -30;
         y = 0;
         clearInterval(playStop);
+    })
+
+    var song = []; // temporal para pruebas de guardar y reproducir cancion
+
+    $('#song-delete').click(function (e){
+        clearSequencer();
+    })
+    
+    $('#song-open').click(function (e){
+        var sequencer = document.getElementById('sequencer');
+        var seq_len = sequencer.rows[0].cells.length;
+        
+        clearSequencer();
+
+        // add notes from song
+        for(var i=0; i<song.length; i++){
+            if(song[i].length>0){
+                for(var j=0; j<song[i].length; j++){
+                    cellNote = sequencer.rows[keys.indexOf(song[i][j])].cells[i];
+                    $(cellNote).addClass('clicked');
+                    $(cellNote).html($(cellNote).data('note-name'));
+                }
+            }
+        }
+    })
+
+    $('#song-save').click(function (e){
+        // var song = [];
+        var sequencer = document.getElementById('sequencer');
+        var seq_len = sequencer.rows[0].cells.length;
+        for(var j = 0; j < seq_len; j++){
+            song.push([]);                      // column
+            // console.log("Column: "+j);
+            for (var i = 0; i < sequencer.rows.length; i++) {
+                if ($(sequencer.rows[i].cells[j]).hasClass('clicked')) {
+                    note = $(sequencer.rows[i].cells[j]).data('note'); // the MIDI note
+                    // console.log(note);
+                    song[j].push(note);         // adds clicked notes by column
+                }
+            }
+        }
+        // for( var i = 0; i < song.length; i++)
+        //     console.log("Notes: "+song[i]);
     })
 
     document.getElementById('main-sequencer').appendChild(grid);

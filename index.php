@@ -103,7 +103,9 @@ session_start();
             <div class="col-sm">
                 <div class="form-inline">
                     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" id="song-open"><i class="fas fa-folder-open fa-2x mr-0"></i></button>
                     <button class="btn btn-outline-success" id="song-save"><i class="fas fa-save fa-2x mr-0"></i></button>
+                    <button class="btn btn-outline-success" id="song-delete"><i class="fas fa-trash-alt fa-2x mr-0"></i></button>
                     <button class="btn btn-outline-success" id="song-play"><i class="far fa-play-circle fa-2x mr-0"></i></button>
                     <button class="btn btn-outline-success" id="song-stop"><i class="fas fa-stop fa-2x mr-0"></i></button>
                 </div>
