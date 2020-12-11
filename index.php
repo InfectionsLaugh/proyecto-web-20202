@@ -8,7 +8,7 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Saludos</title>
+    <title>Página Principal</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/login.css">
@@ -102,10 +102,12 @@ session_start();
         <div class="row no-gutters flex-grow-1">
             <div class="col-sm">
                 <div class="form-inline">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" id="song-save"><i class="fas fa-save fa-2x mr-0"></i></button>
-                    <button class="btn btn-outline-success" id="song-play"><i class="far fa-play-circle fa-2x mr-0"></i></button>
-                    <button class="btn btn-outline-success" id="song-stop"><i class="fas fa-stop fa-2x mr-0"></i></button>
+                    <input class="form-control mr-sm-2" id="song-name" type="text" placeholder="Nombre" aria-label="Nombre">
+                    <button class="btn btn-outline-success" id="song-download"><i class="fas fa-download fa-lg mr-0"></i></button>
+                    <button class="btn btn-outline-success" id="song-save"><i class="fas fa-save fa-lg mr-0"></i></button>
+                    <button class="btn btn-outline-success" id="song-delete"><i class="fas fa-trash-alt fa-lg mr-0"></i></button>
+                    <button class="btn btn-outline-success" id="song-play"><i class="far fa-play-circle fa-lg mr-0"></i></button>
+                    <button class="btn btn-outline-success" id="song-stop"><i class="fas fa-stop fa-lg mr-0"></i></button>
                 </div>
             </div>
             <div class="col-sm justify-content-center d-flex">
@@ -205,8 +207,8 @@ session_start();
                                 </div>
                                 <input name="login" id="login" class="btn btn-block login-btn mb-4" type="button" value="Ingresar">
                             </form>
-                            <div id="success">Bienvenido mi lord</div>
-                            <div id="failure">Regístrate, sucio pagano</div>
+                            <div id="success">Inicio de sesión exitoso. Redirigiendo...</div>
+                            <div id="failure">Usuario y/o contraseña incorrectos.</div>
                             <a href="#!" class="forgot-password-link">¿Olvidaste tu contraseña?</a>
                             <p class="login-card-footer-text">¿No tienes una cuenta? <a href="#!" class="text-reset">¡Regístrate aquí!</a></p>
 
@@ -226,6 +228,7 @@ session_start();
     <script src="js/p5.min.js"></script>
     <script src="js/login.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/midi.js"></script>
     <!-- <script src="js/piano.js"></script> -->
 </body>
 

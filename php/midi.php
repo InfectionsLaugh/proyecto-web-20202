@@ -1,6 +1,11 @@
 <?php
 
 require('midi/midi.class.php');
+session_start();
+
+$bpm = $_POST['bpm'];
+$name = $_POST['name'];
+$author = $_SESSION['user_name'];
 
 $midi = new Midi();
 // $midi->importMid('../music/Undertale_-_Megalovania (1).mid');
@@ -15,33 +20,31 @@ $midi = new Midi();
 $midi->open(96);
 
 $newTrack = $midi->newTrack();
-$midi->addMsg(0, "0 Meta TrkName HolaMidi");
-$midi->addMsg(0, "0 Meta Copyright YoMeroMero");
+$midi->addMsg(0, "0 Meta TrkName $name");
+$midi->addMsg(0, "0 Meta Copyright $author");
 $midi->addMsg(0, "0 TimeSig 4/4 24 8");
 $midi->addMsg(0, "0 KeySig 255 minor");
 $midi->addMsg(0, "0 Meta TrkEnd");
 
 $newTrack = $midi->newTrack();
-$tempo = round(60000000 / 229);
+$tempo = round(60000000 / $bpm);
 $midi->addMsg(1, "0 Tempo $tempo");
 $midi->addMsg(1, "0 Meta TrkEnd");
 
 $newTrack = $midi->newTrack();
 $midi->insertMsg(2, "0 On ch=1 n=62 v=100");
-$midi->insertMsg(2, "48 On ch=1 n=62 v=0");
+$midi->insertMsg(2, "48 Off ch=1 n=62 v=0");
 
 $midi->insertMsg(2, "48 On ch=1 n=62 v=100");
-$midi->insertMsg(2, "96 On ch=1 n=62 v=0");
+$midi->insertMsg(2, "96 Off ch=1 n=62 v=0");
 
 $midi->insertMsg(2, "96 On ch=1 n=74 v=100");
-$midi->insertMsg(2, "192 On ch=1 n=74 v=0");
+$midi->insertMsg(2, "192 Off ch=1 n=74 v=0");
 
 $midi->insertMsg(2, "192 On ch=1 n=69 v=100");
-$midi->insertMsg(2, "336 On ch=1 n=69 v=0");
+$midi->insertMsg(2, "336 Off ch=1 n=69 v=0");
 
-// print_r($midi->getTrack(1));
-
-$midi->saveMidFile('song1.mid');
+$midi->saveMidFile("$name.mid");
 
 
 // for($i = 0; $i < count($midi->getTrack(3)); $i++) {

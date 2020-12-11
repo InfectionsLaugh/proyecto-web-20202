@@ -57,6 +57,21 @@ function clickableGrid(rows, cols, callback) {
     return grid;
 }
 
+function clearSequencer(){
+    var sequencer = document.getElementById('sequencer');
+    var seq_len = sequencer.rows[0].cells.length;
+
+    // clear any notes clicked in the sequencer
+    for(var i = 0; i < sequencer.rows.length; i++){
+        for (var j = 0; j < seq_len; j++) {
+            if ($(sequencer.rows[i].cells[j]).hasClass('clicked')) {
+                $(sequencer.rows[i].cells[j]).toggleClass('clicked');
+                $(sequencer.rows[i].cells[j]).html('');
+            }
+        }
+    }
+}
+
 window.onload = function () {
     $('#bpm-text').val(bpm);
     var instrument = 'acoustic_grand_piano';
@@ -142,6 +157,49 @@ window.onload = function () {
         x = -30;
         y = 0;
         clearInterval(playStop);
+    })
+
+    var song = []; // temporal para pruebas de guardar y reproducir cancion
+
+    $('#song-delete').click(function (e){
+        clearSequencer();
+    })
+    
+    $('#song-open').click(function (e){
+        var sequencer = document.getElementById('sequencer');
+        var seq_len = sequencer.rows[0].cells.length;
+        
+        clearSequencer();
+
+        // add notes from song
+        for(var i=0; i<song.length; i++){
+            if(song[i].length>0){
+                for(var j=0; j<song[i].length; j++){
+                    cellNote = sequencer.rows[keys.indexOf(song[i][j])].cells[i];
+                    $(cellNote).addClass('clicked');
+                    $(cellNote).html($(cellNote).data('note-name'));
+                }
+            }
+        }
+    })
+
+    $('#song-save').click(function (e){
+        // var song = [];
+        var sequencer = document.getElementById('sequencer');
+        var seq_len = sequencer.rows[0].cells.length;
+        for(var j = 0; j < seq_len; j++){
+            song.push([]);                      // column
+            // console.log("Column: "+j);
+            for (var i = 0; i < sequencer.rows.length; i++) {
+                if ($(sequencer.rows[i].cells[j]).hasClass('clicked')) {
+                    note = $(sequencer.rows[i].cells[j]).data('note'); // the MIDI note
+                    // console.log(note);
+                    song[j].push(note);         // adds clicked notes by column
+                }
+            }
+        }
+        // for( var i = 0; i < song.length; i++)
+        //     console.log("Notes: "+song[i]);
     })
 
     document.getElementById('main-sequencer').appendChild(grid);

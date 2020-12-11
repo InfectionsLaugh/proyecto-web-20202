@@ -1,4 +1,18 @@
 $(document).ready(function () {
+    $('#login-user').click(function(e) {
+        $('#failure').css('opacity', '0');
+        $('#failure').css('height', '0');
+        $('#success').css('opacity', '0');
+        $('#success').css('height', '0');
+    });
+
+    $('#login-password').click(function(e) {
+        $('#failure').css('opacity', '0');
+        $('#failure').css('height', '0');
+        $('#success').css('opacity', '0');
+        $('#success').css('height', '0');
+    });
+
     $('#login').click(function (e) {
         $.ajax({
             url: 'php/user.php',
@@ -35,7 +49,7 @@ $(document).ready(function () {
                 password: $('#sign-up-password').val()
             },
             success: function (e) {
-                if (s.result == "success")
+                if (e.result == "success")
                     location.reload();
                 else
                     console.log('adios');
