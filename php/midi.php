@@ -5,17 +5,15 @@ session_start();
 
 $bpm = $_POST['bpm'];
 $name = $_POST['name'];
-$author = $_SESSION['user_name'];
+$notes = $_POST['notes'];
+
+if(isset($_SESSION['user_name'])) {
+    $author = $_SESSION['user_name'];
+} else {
+    $author = "Unknown";
+}
 
 $midi = new Midi();
-// $midi->importMid('../music/Undertale_-_Megalovania (1).mid');
-
-// echo "Tipo del archivo: " . $midi->type . "<br/>";
-// echo "Cantidad de pistas: " . $midi->getTrackCount() . "<br/>";
-// echo "Tempo: " . $midi->getTimebase() . "<br><br/>";
-
-// print_r($midi->getTrack(0));
-
 
 $midi->open(96);
 
@@ -32,21 +30,24 @@ $midi->addMsg(1, "0 Tempo $tempo");
 $midi->addMsg(1, "0 Meta TrkEnd");
 
 $newTrack = $midi->newTrack();
-$midi->insertMsg(2, "0 On ch=1 n=62 v=100");
-$midi->insertMsg(2, "48 Off ch=1 n=62 v=0");
 
-$midi->insertMsg(2, "48 On ch=1 n=62 v=100");
-$midi->insertMsg(2, "96 Off ch=1 n=62 v=0");
+foreach($notes as $note) {
+    $noteStart = $note['index'] * 48;
+    $noteEnd = $noteStart + 48;
+    $notePlay = $note['note'];
+    echo $noteStart . ' ' . $noteEnd . '<br/>';
+    $midi->insertMsg(2, "$noteStart On ch=1 n=$notePlay v=100");
+    $midi->insertMsg(2, "$noteEnd Off ch=1 n=$notePlay v=0");
+}
+// $midi->insertMsg(2, "0 On ch=1 n=62 v=100");
+// $midi->insertMsg(2, "48 Off ch=1 n=62 v=0");
 
-$midi->insertMsg(2, "96 On ch=1 n=74 v=100");
-$midi->insertMsg(2, "192 Off ch=1 n=74 v=0");
+// $midi->insertMsg(2, "48 On ch=1 n=62 v=100");
+// $midi->insertMsg(2, "96 Off ch=1 n=62 v=0");
 
-$midi->insertMsg(2, "192 On ch=1 n=69 v=100");
-$midi->insertMsg(2, "336 Off ch=1 n=69 v=0");
+// $midi->insertMsg(2, "96 On ch=1 n=74 v=100");
+// $midi->insertMsg(2, "192 Off ch=1 n=74 v=0");
 
-$midi->saveMidFile("$name.mid");
-
-
-// for($i = 0; $i < count($midi->getTrack(3)); $i++) {
-//     echo "Mensaje " . ($i + 1) . ': ' . $midi->getTrack(3)[$i] . '<br/>';
-// }
+// $midi->insertMsg(2, "192 On ch=1 n=69 v=100");
+// $midi->insertMsg(2, "336 Off ch=1 n=69 v=0");
+echo $midi->saveMid("$name.mid");
