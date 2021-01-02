@@ -18,13 +18,14 @@ session_start();
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="css/navbar.css">
   <link rel="stylesheet" href="css/login.css">
-
+  <link rel="stylesheet" href="css/table.css">
 
 
   <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
   <script type="text/javascript" src="js/bootstrap.min.js"></script>
   <script type="text/javascript" src="js/navbar.js"></script>
   <script type="text/javascript" src="js/icons.js"></script>
+  
 
 
 </head>
@@ -131,30 +132,33 @@ session_start();
             <div class="tab-pane" id="account">
               <h6>AJUSTES DE CUENTA</h6>
               <hr>
-              <form>
+              <form action="edit-profile.php" method="post">
                 <div class="form-group">
                   <label for="username">Cambiar nombre personal</label>
-                  <input type="text" class="form-control" id="username" aria-describedby="usernameHelp" placeholder="Ingresa tu nombre" value="Nombre actual">
+                  <input type="text" class="form-control" name="name" id="name" aria-describedby="usernameHelp" placeholder="Ingresa tu nombre">
                 </div>
                 <hr>
                 <div class="form-group">
                   <label for="username">Cambiar correo electronico</label>
-                  <input type="text" class="form-control" id="username" aria-describedby="usernameHelp" placeholder="Nuevo correo electronico" value="correo-actual@gmail.com">
+                  <input type="text" class="form-control" name="email" id="email" aria-describedby="usernameHelp" placeholder="Nuevo correo electrónico">
                 </div>
                 <hr>
                 <div class="form-group">
                   <label class="d-block">Cambiar contrasena</label>
-                  <input type="text" class="form-control" placeholder="Ingresa tu contrasena actual">
-                  <input type="text" class="form-control mt-1" placeholder="Nueva contrasena">
-                  <input type="text" class="form-control mt-1" placeholder="Confirma tu nueva contrasena">
+                  <input type="text" class="form-control" name="current-pass" id="current-pass" placeholder="Ingresa tu contraseña actual">
+                  <input type="text" class="form-control mt-1" name="new-pass" id="new-pass" placeholder="Nueva contraseña">
+                  <input type="text" class="form-control mt-1" name="confirm-new-pass" id="confirm-new-pass" placeholder="Confirma tu nueva contraseña">
                 </div>
-                <button type="button" class="btn btn-primary">Update Profile</button>
-                <button type="reset" class="btn btn-light">Reset Changes</button>
+                <input type="submit" class="btn btn-primary" value="Save"></input>
+                <button type="button" class="btn btn-primary">Actualizar perfil</button>
+                <!-- <button type="reset" class="btn btn-light">Reset Changes</button> -->
               </form>
             </div>
             <div class="tab-pane" id="songs">
               <h6>MIS CANCIONES</h6>
               <hr>
+              
+              <?php include 'php/view-songs.php';?>
 
             </div>
           </div>

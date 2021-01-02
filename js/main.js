@@ -1,4 +1,4 @@
-var notes = [
+let notes = [
     21, 23, 24, 26, 28, 29,
     31, 33, 35, 36, 38, 40,
     41, 43, 45, 47, 48, 50,
@@ -10,9 +10,9 @@ var notes = [
     103, 105, 107, 108
 ];
 
-var midi_notes = [];
+let midi_notes = [];
 
-var blacks = [
+let blacks = [
     22, 25, 27, 30, 32, 34,
     37, 39, 42, 44, 46, 49,
     51, 54, 56, 58, 61, 63,
@@ -21,9 +21,9 @@ var blacks = [
     94, 97, 99, 102, 104, 106
 ];
 
-var bpm = 60;
+let bpm = 60;
 
-var key_names = [
+let key_names = [
     'A0', 'A#0', 'B0',
     'C1', 'C#1', 'D1', 'C#1', 'E1', 'F1', 'F#1', 'G1', 'G#1', 'A1', 'A#1', 'B1',
     'C2', 'C#2', 'D2', 'C#2', 'E2', 'F2', 'F#2', 'G2', 'G#2', 'A2', 'A#2', 'B2',
@@ -35,20 +35,22 @@ var key_names = [
     'C8'
 ];
 
-var keys = notes.concat(blacks);
+let keys = notes.concat(blacks);
 keys = keys.sort(function (a, b) {
     return a - b;
 });
 
+let song = []; // temporal para pruebas de guardar y reproducir cancion
+
 function clickableGrid(rows, cols, callback) {
-    var i = 0;
-    var grid = document.createElement('table');
+    let i = 0;
+    let grid = document.createElement('table');
     grid.className = 'grid';
     grid.id = 'sequencer'
-    for (var r = 0; r < rows; ++r) {
-        var tr = grid.appendChild(document.createElement('tr'));
-        for (var c = 0; c < cols; ++c) {
-            var cell = tr.appendChild(document.createElement('td'));
+    for (let r = 0; r < rows; ++r) {
+        let tr = grid.appendChild(document.createElement('tr'));
+        for (let c = 0; c < cols; ++c) {
+            let cell = tr.appendChild(document.createElement('td'));
             cell.setAttribute('data-note', keys[r]);
             cell.setAttribute('data-note-name', key_names[r]);
             cell.addEventListener('click', (function (el, r, c, i) {
@@ -60,12 +62,12 @@ function clickableGrid(rows, cols, callback) {
 }
 
 function clearSequencer() {
-    var sequencer = document.getElementById('sequencer');
-    var seq_len = sequencer.rows[0].cells.length;
+    let sequencer = document.getElementById('sequencer');
+    let seq_len = sequencer.rows[0].cells.length;
 
     // clear any notes clicked in the sequencer
-    for (var i = 0; i < sequencer.rows.length; i++) {
-        for (var j = 0; j < seq_len; j++) {
+    for (let i = 0; i < sequencer.rows.length; i++) {
+        for (let j = 0; j < seq_len; j++) {
             if ($(sequencer.rows[i].cells[j]).hasClass('clicked')) {
                 $(sequencer.rows[i].cells[j]).toggleClass('clicked');
                 $(sequencer.rows[i].cells[j]).html('');
@@ -74,21 +76,65 @@ function clearSequencer() {
     }
 }
 
-window.onload = function () {
-    $('#bpm-text').val(bpm);
-    var instrument = 'acoustic_grand_piano';
-    var note = 0;
-    var delay = 0;
-    var velocity = 127;
+function openSong(idSong){
+    let sequencer = document.getElementById('sequencer');
+        let seq_len = sequencer.rows[0].cells.length;
 
-    for (var i = 0; i < keys.length; i++) {
+        clearSequencer();
+
+        fetch(`php/open-song.php?song_id=${idSong}`).then(res => {
+            console.log(res);
+            return res.json();
+        }).then(json => {
+            song = json;
+
+            for (let i = 0; i < song.length; i++) {
+                if (song[i].length > 0) {
+                    for (let j = 0; j < song[i].length; j++) {
+                        cellNote = sequencer.rows[keys.indexOf(song[i][j])].cells[i];
+                        $(cellNote).addClass('clicked');
+                        $(cellNote).html($(cellNote).data('note-name'));
+                    }
+                }
+            }
+        }).catch(error => console.log(error));
+}
+
+const loadSongValues = () =>{
+
+    fetch(`php/get_songs.php`)
+    .then(res => res.json())
+    .then(songNames => {
+        console.log(songNames)
+        songNames.forEach(songName => {
+            $('#song-list').append(`<a class="dropdown-item" href="#">${songName}</a>`);
+        });
+
+    }).catch(error => console.log(error));
+
+}
+
+
+$(document).ready(function() { 
+    loadSongValues();
+});
+
+window.onload = function () {
+
+    $('#bpm-text').val(bpm);
+    let instrument = 'acoustic_grand_piano';
+    let note = 0;
+    let delay = 0;
+    let velocity = 127;
+
+    for (let i = 0; i < keys.length; i++) {
         if (blacks.indexOf(keys[i]) > -1)
             $('#keys').append('<div data-note="' + keys[i] + '" class="key black text-white">' + key_names[i] + '</div>');
         else
             $('#keys').append('<div data-note="' + keys[i] + '" class="key">' + key_names[i] + '</div>');
     }
 
-    var grid = clickableGrid(keys.length, 45, function (el, row, col, i) {
+    let grid = clickableGrid(keys.length, 45, function (el, row, col, i) {
         delay = 0; // play one note every quarter second
         note = $(el).data('note'); // the MIDI note
         velocity = 127; // how hard the note hits
@@ -97,7 +143,7 @@ window.onload = function () {
         MIDI.noteOn(0, note, velocity, delay);
         MIDI.noteOff(0, note, delay + 0.75);
 
-        console.log('columna: ', col);
+        // console.log('columna: ', col);
 
         $(el).toggleClass('clicked');
 
@@ -112,19 +158,20 @@ window.onload = function () {
             $(el).html('');
         }
 
-        console.log('notas: ', midi_notes);
+        // console.log('notas: ', midi_notes);
     });
 
-    var x = -30;
-    var y = 0;
+    let x = -30;
+    let y = 0;
 
-    var playStop;
+    let playStop;
 
+//reproducir cancion
     $('#song-play').click(function (e) {
-        var sequencer = document.getElementById('sequencer');
-        var seq_len = sequencer.rows[0].cells.length;
-        var j = 0;
-        var time = (1 / (bpm / 60) * 1000) / 4;
+        let sequencer = document.getElementById('sequencer');
+        let seq_len = sequencer.rows[0].cells.length;
+        let j = 0;
+        let time = (1 / (bpm / 60) * 1000) / 4;
         console.log('tiempo:', time);
 
         $('#playhead').css('display', 'block');
@@ -145,7 +192,7 @@ window.onload = function () {
             x += 25;
             y += 25;
 
-            for (var i = 0; i < sequencer.rows.length; i++) {
+            for (let i = 0; i < sequencer.rows.length; i++) {
                 if ($(sequencer.rows[i].cells[j]).hasClass('clicked')) {
                     delay = 0; // play one note every quarter second
                     note = $(sequencer.rows[i].cells[j]).data('note'); // the MIDI note
@@ -160,7 +207,7 @@ window.onload = function () {
             j++;
         }, time);
     });
-
+//detener la cancion
     $('#song-stop').click(function (e) {
         $('#playhead').css('display', 'none');
         $('#playhead-line').css('display', 'none');
@@ -170,39 +217,24 @@ window.onload = function () {
         y = 0;
         clearInterval(playStop);
     })
-
-    var song = []; // temporal para pruebas de guardar y reproducir cancion
-
+// borrar notas en tablero
     $('#song-delete').click(function (e) {
         clearSequencer();
     })
-
+// abrir cancion en tablero
     $('#song-open').click(function (e) {
-        var sequencer = document.getElementById('sequencer');
-        var seq_len = sequencer.rows[0].cells.length;
-
-        clearSequencer();
-
-        // add notes from song
-        for (var i = 0; i < song.length; i++) {
-            if (song[i].length > 0) {
-                for (var j = 0; j < song[i].length; j++) {
-                    cellNote = sequencer.rows[keys.indexOf(song[i][j])].cells[i];
-                    $(cellNote).addClass('clicked');
-                    $(cellNote).html($(cellNote).data('note-name'));
-                }
-            }
-        }
+        openSong(14);                       // la funcion ya sirve
     })
-
+//guardar cancion en tablero
     $('#song-save').click(function (e) {
-        // var song = [];
-        var sequencer = document.getElementById('sequencer');
-        var seq_len = sequencer.rows[0].cells.length;
-        for (var j = 0; j < seq_len; j++) {
+        // let song = [];
+        let songTitle = $('#song-name').val();
+        let sequencer = document.getElementById('sequencer');
+        let seq_len = sequencer.rows[0].cells.length;
+        for (let j = 0; j < seq_len; j++) {
             song.push([]);                      // column
             // console.log("Column: "+j);
-            for (var i = 0; i < sequencer.rows.length; i++) {
+            for (let i = 0; i < sequencer.rows.length; i++) {
                 if ($(sequencer.rows[i].cells[j]).hasClass('clicked')) {
                     note = $(sequencer.rows[i].cells[j]).data('note'); // the MIDI note
                     // console.log(note);
@@ -210,9 +242,25 @@ window.onload = function () {
                 }
             }
         }
-        // for( var i = 0; i < song.length; i++)
-        //     console.log("Notes: "+song[i]);
-    })
+
+        const songArray = JSON.stringify(song);
+        $.ajax({
+            url: 'php/save-song.php',
+            type: 'post',
+            //     contentType: 'application/json',
+            //      dataType: 'json',
+            data: {
+                songArray: songArray,
+                songName: songTitle,
+            },
+            success: function (s) {
+                alert("Cancion guardada!");
+            },
+            error: function (e) {
+                alert('Error guardando la cancion');
+            }
+        });
+    });
 
     document.getElementById('main-sequencer').appendChild(grid);
 
@@ -257,9 +305,9 @@ window.onload = function () {
         if (e.which == 13) {
             clearInterval(playStop);
             bpm = $(this).val();
-            var time = (1 / (bpm / 60) * 1000) / 4;
+            let time = (1 / (bpm / 60) * 1000) / 4;
             console.log('tiempo enter:', time);
-            var j = 0;
+            let j = 0;
 
             playStop = setInterval(function (e) {
                 $('#playhead').css('transform', 'translateX(' + x + 'px)');
@@ -276,7 +324,7 @@ window.onload = function () {
                 x += 25;
                 y += 25;
 
-                for (var i = 0; i < sequencer.rows.length; i++) {
+                for (let i = 0; i < sequencer.rows.length; i++) {
                     if ($(sequencer.rows[i].cells[j]).hasClass('clicked')) {
                         delay = 0; // play one note every quarter second
                         note = $(sequencer.rows[i].cells[j]).data('note'); // the MIDI note
@@ -322,7 +370,7 @@ window.onload = function () {
     });
 
     $('.overlay').click(function (e) {
-        var id = $(this).attr('id');
+        let id = $(this).attr('id');
         console.log(id);
         $('#' + id + '-form').addClass('slideout');
         $('#' + id + '-form').one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function (event) {
@@ -334,3 +382,4 @@ window.onload = function () {
         console.log('dasda');
     });
 };
+
