@@ -103,11 +103,12 @@ session_start();
             <div class="col-sm">
                 <div class="form-inline">
                     <input class="form-control mr-sm-2" id="song-name" type="text" placeholder="Nombre" aria-label="Nombre">
-                    <button class="btn btn-outline-success" id="song-download"><i class="fas fa-download fa-lg mr-0"></i></button>
-                    <button class="btn btn-outline-success" id="song-save"><i class="fas fa-save fa-lg mr-0"></i></button>
-                    <button class="btn btn-outline-success" id="song-delete"><i class="fas fa-trash-alt fa-lg mr-0"></i></button>
-                    <button class="btn btn-outline-success" id="song-play"><i class="far fa-play-circle fa-lg mr-0"></i></button>
-                    <button class="btn btn-outline-success" id="song-stop"><i class="fas fa-stop fa-lg mr-0"></i></button>
+                    <button class="btn lh-0 btn-outline-success" id="song-download"><i class="fas fa-download mr-0"></i></button>
+                    <button class="btn lh-0 btn-outline-success" id="song-save"><i class="fas fa-save mr-0"></i></button>
+                    <button class="btn lh-0 btn-outline-success" id="song-delete"><i class="fas fa-trash-alt mr-0"></i></button>
+                    <button class="btn lh-0 btn-outline-success" id="song-play"><i class="far fa-play-circle mr-0"></i></button>
+                    <button class="btn lh-0 btn-outline-success" id="song-stop"><i class="fas fa-stop mr-0"></i></button>
+                    <button class="btn lh-0 btn-outline-success" id="song-open" data-toggle="modal" data-target="#openMidiModal"><i class="fas fa-folder-open mr-0"></i></button>
                 </div>
             </div>
             <div class="col-sm justify-content-center d-flex">
@@ -222,6 +223,33 @@ session_start();
 
     <div class="modal" id="wait-modal">
         <span>Cargando...</span>
+    </div>
+
+    <div class="modal" id="openMidiModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Importar archivo MIDI</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Recuerda que no todos los archivos MIDI funcionarán bien. Los archivos simples funcionan mejor.</p>
+                    <p>
+                        <form>
+                            <div class="form-group">
+                                <input type="file" accept=".mid" class="form-control-file" id="exampleFormControlFile1">
+                            </div>
+                        </form>
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id="midi-open" class="btn btn-primary">Abrir</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="js/jquery.js"></script>

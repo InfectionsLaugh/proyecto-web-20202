@@ -59,12 +59,12 @@ function clickableGrid(rows, cols, callback) {
     return grid;
 }
 
-function clearSequencer() {
+function clearSequencer(){
     var sequencer = document.getElementById('sequencer');
     var seq_len = sequencer.rows[0].cells.length;
 
     // clear any notes clicked in the sequencer
-    for (var i = 0; i < sequencer.rows.length; i++) {
+    for(var i = 0; i < sequencer.rows.length; i++){
         for (var j = 0; j < seq_len; j++) {
             if ($(sequencer.rows[i].cells[j]).hasClass('clicked')) {
                 $(sequencer.rows[i].cells[j]).toggleClass('clicked');
@@ -97,8 +97,6 @@ window.onload = function () {
         MIDI.noteOn(0, note, velocity, delay);
         MIDI.noteOff(0, note, delay + 0.75);
 
-        console.log('columna: ', col);
-
         $(el).toggleClass('clicked');
 
         if ($(el).hasClass('clicked')) {
@@ -108,11 +106,11 @@ window.onload = function () {
             });
             $(el).html($(el).data('note-name'));
         } else {
-            midi_notes.splice(midi_notes.findIndex(n => n.note == $(el).data('note') && n.index === col));
             $(el).html('');
+            midi_notes.splice(midi_notes.findIndex(v => v.note == $(el).data('note') && v.index == col), 1);
         }
 
-        console.log('notas: ', midi_notes);
+        console.log(midi_notes);
     });
 
     var x = -30;
@@ -125,7 +123,7 @@ window.onload = function () {
         var seq_len = sequencer.rows[0].cells.length;
         var j = 0;
         var time = (1 / (bpm / 60) * 1000) / 4;
-        console.log('tiempo:', time);
+        console.log('tiempo:' , time);
 
         $('#playhead').css('display', 'block');
         $('#playhead-line').css('display', 'block');
@@ -173,20 +171,20 @@ window.onload = function () {
 
     var song = []; // temporal para pruebas de guardar y reproducir cancion
 
-    $('#song-delete').click(function (e) {
+    $('#song-delete').click(function (e){
         clearSequencer();
     })
-
-    $('#song-open').click(function (e) {
+    
+    $('#song-open').click(function (e){
         var sequencer = document.getElementById('sequencer');
         var seq_len = sequencer.rows[0].cells.length;
-
+        
         clearSequencer();
 
         // add notes from song
-        for (var i = 0; i < song.length; i++) {
-            if (song[i].length > 0) {
-                for (var j = 0; j < song[i].length; j++) {
+        for(var i=0; i<song.length; i++){
+            if(song[i].length>0){
+                for(var j=0; j<song[i].length; j++){
                     cellNote = sequencer.rows[keys.indexOf(song[i][j])].cells[i];
                     $(cellNote).addClass('clicked');
                     $(cellNote).html($(cellNote).data('note-name'));
@@ -195,11 +193,11 @@ window.onload = function () {
         }
     })
 
-    $('#song-save').click(function (e) {
+    $('#song-save').click(function (e){
         // var song = [];
         var sequencer = document.getElementById('sequencer');
         var seq_len = sequencer.rows[0].cells.length;
-        for (var j = 0; j < seq_len; j++) {
+        for(var j = 0; j < seq_len; j++){
             song.push([]);                      // column
             // console.log("Column: "+j);
             for (var i = 0; i < sequencer.rows.length; i++) {

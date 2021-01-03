@@ -16,7 +16,13 @@ $(document).ready(function () {
                 },
                 type: 'POST',
                 success: function (e) {
-
+                    var res = JSON.parse(e);
+                    if (res.response == "success") {
+                        var link = document.createElement("a");
+                        link.download = res.song_name;
+                        link.href = 'php/downloadsong.php?name=' + res.song_name;
+                        link.click();
+                    }
                 }, error: function (e) {
 
                 }
@@ -24,5 +30,9 @@ $(document).ready(function () {
         } else {
             alert('Por favor, indica un nombre de canción');
         }
+    });
+
+    $('#midi-open').click(function (e) {
+        
     });
 });

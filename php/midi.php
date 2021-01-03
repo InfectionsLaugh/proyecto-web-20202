@@ -32,22 +32,13 @@ $midi->addMsg(1, "0 Meta TrkEnd");
 $newTrack = $midi->newTrack();
 
 foreach($notes as $note) {
-    $noteStart = $note['index'] * 48;
-    $noteEnd = $noteStart + 48;
+    $noteStart = $note['index'] * 24;
+    $noteEnd = $noteStart + 24;
     $notePlay = $note['note'];
-    echo $noteStart . ' ' . $noteEnd . '<br/>';
     $midi->insertMsg(2, "$noteStart On ch=1 n=$notePlay v=100");
     $midi->insertMsg(2, "$noteEnd Off ch=1 n=$notePlay v=0");
 }
-// $midi->insertMsg(2, "0 On ch=1 n=62 v=100");
-// $midi->insertMsg(2, "48 Off ch=1 n=62 v=0");
 
-// $midi->insertMsg(2, "48 On ch=1 n=62 v=100");
-// $midi->insertMsg(2, "96 Off ch=1 n=62 v=0");
+$midi->saveMidFile("$name.mid");
 
-// $midi->insertMsg(2, "96 On ch=1 n=74 v=100");
-// $midi->insertMsg(2, "192 Off ch=1 n=74 v=0");
-
-// $midi->insertMsg(2, "192 On ch=1 n=69 v=100");
-// $midi->insertMsg(2, "336 Off ch=1 n=69 v=0");
-echo $midi->saveMid("$name.mid");
+echo json_encode(['response' => 'success', 'song_name' => "$name"]);
