@@ -1,5 +1,8 @@
 <?php
 session_start();
+if (!isset($_SESSION["user_name"])) {
+    header("Location:index.php");
+}
 ?>
 
 <!DOCTYPE html>
@@ -45,14 +48,19 @@ session_start();
         <li class="nav-item">
           <a class="nav-link" href="index.php"><i class="fas fa-music"></i>Inicio</a>
         </li>
+        <?php if($_SESSION["user_name"]=='admin') { ?>
+          <li class="nav-item">
+              <a class="nav-link" href="all-users.php" id="all-users"><i class="fas fa-users-cog"></i>Usuarios</a>
+          </li>
+        <?php } ?>
         <li class="nav-item">
-          <a class="nav-link" href="javascript:void(0);"><i class="far fa-folder-open"></i>Biblioteca</a>
+            <a class="nav-link" href="view-songs.php" id="my-songs"><i class="fas fa-user"></i>Canciones</a>
         </li>
-        <li class="nav-item  active">
-          <a class="nav-link" href="#" id="userDropdownBtn"><i class="fas fa-user"></i><?= $_SESSION["user_name"] ?></a>
+        <li class="nav-item active">
+            <a class="nav-link" href="home.php" id="userDropdownBtn"><i class="fas fa-user"></i><?= $_SESSION["user_name"] ?></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="javascript:void(0);"><i class="fas fa-sign-out-alt"></i>Cerrar Sesion</a>
+        <a class="nav-link" href="#" id="logout"><i class="fas fa-sign-out-alt"></i>Cerrar Sesión</a>
         </li>
       </ul>
     </div>
@@ -170,6 +178,7 @@ session_start();
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script src="js/login.js"></script>
 </body>
 
 </html>

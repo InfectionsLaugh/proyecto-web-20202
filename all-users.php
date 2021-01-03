@@ -1,6 +1,8 @@
 <?php
 session_start();
-
+if (!isset($_SESSION["user_name"])) {
+    header("Location:index.php");
+}
 if(isset($_GET["option"]))
 	$option=$_GET["option"];
 else 
@@ -27,7 +29,7 @@ switch($option) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Saludos</title>
+  <title>Usuarios</title>
 
   <link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.8.95/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -56,7 +58,8 @@ switch($option) {
       <i class="fas fa-bars text-white"></i>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav ml-auto">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
                 <div class="hori-selector">
                     <div class="left"></div>
                     <div class="right"></div>
@@ -64,13 +67,12 @@ switch($option) {
                 <li class="nav-item">
                     <a class="nav-link" href="index.php"><i class="fas fa-music"></i>Inicio</a>
                 </li>
-                <!-- <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="far fa-folder-open"></i>Biblioteca</a>
-                </li> -->
-                <li class="nav-item active">
-                    <a class="nav-link" href="all-users.php" id="all-users"><i class="fas fa-users-cog"></i>Usuarios</a>
-                </li>
                 <?php if (isset($_SESSION["user_name"])) { ?>
+                    <?php if($_SESSION["user_name"]=='admin') { ?>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="all-users.php" id="all-users"><i class="fas fa-users-cog"></i>Usuarios</a>
+                    </li>
+                    <?php } ?>
                     <li class="nav-item">
                         <a class="nav-link" href="view-songs.php" id="my-songs"><i class="fas fa-user"></i>Canciones</a>
                     </li>
@@ -89,7 +91,7 @@ switch($option) {
                     </li>
                 <?php } ?>
             </ul>
-    </div>
+        </div>
   </nav>
   <nav class="navbar navbar-light bg-dark z-1000">
         <div class="row no-gutters flex-grow-1">
@@ -117,6 +119,7 @@ switch($option) {
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script src="js/login.js"></script>
 </body>
 
 </html>

@@ -68,21 +68,21 @@ session_start();
             <i class="fas fa-bars text-white"></i>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ml-auto">
+        <ul class="navbar-nav ml-auto">
+            
+            <?php if (isset($_SESSION["user_name"])) { ?>
                 <div class="hori-selector">
                     <div class="left"></div>
                     <div class="right"></div>
                 </div>
-                <li class="nav-item active">
-                    <a class="nav-link" href="index.php"><i class="fas fa-music"></i>Inicio</a>
-                </li>
-                <!-- <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="far fa-folder-open"></i>Biblioteca</a>
-                </li> -->
-                <li class="nav-item">
-                    <a class="nav-link" href="all-users.php" id="all-users"><i class="fas fa-users-cog"></i>Usuarios</a>
-                </li>
-                <?php if (isset($_SESSION["user_name"])) { ?>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="index.php"><i class="fas fa-music"></i>Inicio</a>
+                    </li>
+                <?php if($_SESSION["user_name"]=='admin') { ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="all-users.php" id="all-users"><i class="fas fa-users-cog"></i>Usuarios</a>
+                    </li>
+                    <?php } ?>
                     <li class="nav-item">
                         <a class="nav-link" href="view-songs.php" id="my-songs"><i class="fas fa-user"></i>Canciones</a>
                     </li>
@@ -93,12 +93,14 @@ session_start();
                         <a class="nav-link" href="#" id="logout"><i class="fas fa-sign-out-alt"></i>Cerrar Sesión</a>
                     </li>
                 <?php } else { ?>
-                    <li class="nav-item">
+                    <button type="button" class="btn nav-btns btn-login open-login"><i class="fas fa-sign-in-alt"></i>Iniciar Sesión</button>
+                    <button type="button" class="btn nav-btns btn-register open-register"><i class="fas fa-user-plus"></i>Registrarse</button>
+                    <!-- <li class="nav-item">
                         <a class="nav-link open-login" href="#"><i class="fas fa-sign-in-alt"></i>Iniciar Sesion</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link open-register" href="#"><i class="fas fa-user-plus"></i>Registrarse</a>
-                    </li>
+                    </li> -->
                 <?php } ?>
             </ul>
         </div>
