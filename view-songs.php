@@ -52,8 +52,7 @@ switch($option) {
 
 
 </head>
-
-<body>
+<body style="overflow: auto">
   <nav class="navbar navbar-expand-lg navbar-mainbg">
     <a class="navbar-brand navbar-logo" href="#">Cimapiano</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -86,27 +85,20 @@ switch($option) {
     </div>
   </nav>
   <nav class="navbar navbar-light bg-dark z-1000">
-        <div class="row no-gutters flex-grow-1">
-            <div class="col-sm">
-                <div class="form-inline">
-                <h2></h2>
-                </div>
-            </div>
+    <div class="row no-gutters flex-grow-1">
+      <div class="col-sm">
+        <div class="form-inline">
+        <h2></h2>
         </div>
-    </nav>
-    <div class="container">
-    <div class="row gutters-sm">
-    <h2 id="title-header">		
-		<?php 
-		echo $titulo; 
-	  	?>	  	
-          </h2>
-          <br><br>
-
-    <?php include $contenido; ?>      
-    
+      </div>
     </div>
-
+  </nav>
+  <div class="container">
+    <div class="row gutters-sm">
+      <h2 id="title-header"><?= $titulo ?></h2><br><br>
+      <?php include $contenido; ?>      
+    </div>
+    <br><br>
   </div>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
