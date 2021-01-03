@@ -18,25 +18,6 @@ if (!$mysqli->connect_errno) {
     $stmt->execute();
     $albums = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
-
-    //Desplegar tabla albumes
-
-    echo '<table>
-            <tr>
-              <th>Título</th> <th>Creado</th> <th>Eliminar</th>
-            </tr>';
-    foreach($albums as $album ){
-      echo '<tr>
-        <td>'.$album['album_name'].'</td>
-        <td>'.$album['created_at'].'</td>
-        <td><a href="delete-album.php?album_id='.$album["album_id"].'">
-            <i class="far fa-trash-alt" style="font-size:20px;color:#808080"></i>
-            </a>
-        </td>
-      </tr>';
-    }
-    echo '</table><br><br>';
-
     // Desplegar tabla canciones
     echo '<table>
             <tr>
@@ -44,7 +25,10 @@ if (!$mysqli->connect_errno) {
             </tr>';
     foreach($songs as $song ){
       echo '<tr>
-        <td>'.$song['song_name'].'</td>
+        <td>'.$song['song_name'].'
+        <a href="view-songs.php?option=2&song_id='.$song["song_id"].'">
+        <i class="far fa-edit" style="font-size:20px;color:#808080"></i></a>
+        </td>
         <td>'.$song['album_name'].'</td>
         <td>'.$song['created_at'].'</td>
         <td>'.$song['updated_at'].'</td>
