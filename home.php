@@ -162,13 +162,6 @@ if (!isset($_SESSION["user_name"])) {
                 <!-- <button type="reset" class="btn btn-light">Reset Changes</button> -->
               </form>
             </div>
-            <div class="tab-pane" id="songs">
-              <h6>MIS CANCIONES</h6>
-              <hr>
-              
-              <?php include 'php/view-songs.php';?>
-
-            </div>
           </div>
         </div>
       </div>

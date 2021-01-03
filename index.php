@@ -113,7 +113,9 @@ session_start();
                     <label class="navbar-text text-light" for="song-name">Título: </label>
                     <input class="form-control mr-sm-2" id="song-name" type="text" value="Sin título" aria-label="Nombre">
                     <button class="btn btn-outline-success piano-btn" id="song-new"><i class="far fa-file fa-lg mr-0"></i></button>
+                    <?php if (isset($_SESSION["user_name"])) { ?>
                     <button class="btn btn-outline-success piano-btn" id="song-save"><i class="fas fa-save fa-lg mr-0"></i></button>
+                    <?php }?>
                     <!-- <button class="btn btn-outline-success piano-btn" id="song-download"><i class="fas fa-download fa-lg mr-0"></i></button> -->
                     <button class="btn btn-outline-success piano-btn" id="song-delete"><i class="fas fa-trash-alt fa-lg mr-0"></i></button>
                     
@@ -122,6 +124,7 @@ session_start();
             </div>
             <div class="col-sm">
                 <div class="form-inline">
+                <?php if (isset($_SESSION["user_name"])) { ?>
                 <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Mis canciones
@@ -130,6 +133,7 @@ session_start();
                             
                         </div>
                 </div>
+                <?php } ?>
                 <button class="btn btn-outline-success piano-btn" id="song-play"><i class="far fa-play-circle fa-lg mr-0"></i></button>
                 <button class="btn btn-outline-success piano-btn" id="song-stop"><i class="fas fa-stop fa-lg mr-0"></i></button>
                     
