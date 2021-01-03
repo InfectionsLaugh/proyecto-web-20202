@@ -40,8 +40,6 @@ keys = keys.sort(function (a, b) {
     return a - b;
 });
 
-let song = []; // temporal para pruebas de guardar y reproducir cancion
-
 function clickableGrid(rows, cols, callback) {
     let i = 0;
     let grid = document.createElement('table');
@@ -65,7 +63,6 @@ function clearSequencer() {
     let sequencer = document.getElementById('sequencer');
     let seq_len = sequencer.rows[0].cells.length;
 
-    // clear any notes clicked in the sequencer
     for (let i = 0; i < sequencer.rows.length; i++) {
         for (let j = 0; j < seq_len; j++) {
             if ($(sequencer.rows[i].cells[j]).hasClass('clicked')) {
@@ -76,10 +73,12 @@ function clearSequencer() {
     }
 }
 
+let idOpenedSong = 0;
+let openedSongName;
+
 function openSong(idSong) {
     let sequencer = document.getElementById('sequencer');
-    let seq_len = sequencer.rows[0].cells.length;
-
+    let song = [];
     clearSequencer();
 
     fetch(`php/open-song.php?song_id=${idSong}`).then(res => {
@@ -100,24 +99,40 @@ function openSong(idSong) {
     }).catch(error => console.log(error));
 }
 
+function saveSongArray() {
+    let songSaved = [];
+    let sequencer = document.getElementById('sequencer');
+    let seq_len = sequencer.rows[0].cells.length;
+    for (let j = 0; j < seq_len; j++) {
+        songSaved.push([]);                      // column
+        for (let i = 0; i < sequencer.rows.length; i++) {
+            if ($(sequencer.rows[i].cells[j]).hasClass('clicked')) {
+                note = $(sequencer.rows[i].cells[j]).data('note'); // the MIDI note
+                songSaved[j].push(note);         // adds clicked notes by column
+            }
+        }
+    }
+    return songSaved;
+}
+
 const loadSongValues = () => {
 
     fetch(`php/get_songs.php`)
         .then(res => res.json())
         .then(songNames => {
-            console.log(songNames)
-
+            // console.log(songNames)
             songNames.forEach(songElement => {
                 $('#song-list').append(`<a class="dropdown-item" id="${songElement.id}" >${songElement.name}</a>`);
 
                 $(`#${songElement.id}`).click(e => {
                         const songId = songElement.id;
                         openSong(songId);
+                        $('#song-name').val(`${songElement.name}`);
+                        idOpenedSong = songId;
+                        openedSongName = $(`#${songElement.id}`).text();
                 });
             });
-
         }).catch(error => console.log(error));
-
 }
 
 
@@ -227,45 +242,72 @@ window.onload = function () {
     $('#song-delete').click(function (e) {
         clearSequencer();
     })
-    // abrir cancion en tablero
-    $('#song-open').click(function (e) {
-        openSong(14);                       // la funcion ya sirve
+    // crear nueva cancion 
+    $('#song-new').click(function (e) {
+        idOpenedSong = 0;
+        $('#song-name').val("Sin título");
+        clearSequencer();
+
     })
     //guardar cancion en tablero
     $('#song-save').click(function (e) {
-        // let song = [];
+        const mySong = saveSongArray();
+        const songArray = JSON.stringify(mySong);
         let songTitle = $('#song-name').val();
-        let sequencer = document.getElementById('sequencer');
-        let seq_len = sequencer.rows[0].cells.length;
-        for (let j = 0; j < seq_len; j++) {
-            song.push([]);                      // column
-            // console.log("Column: "+j);
-            for (let i = 0; i < sequencer.rows.length; i++) {
-                if ($(sequencer.rows[i].cells[j]).hasClass('clicked')) {
-                    note = $(sequencer.rows[i].cells[j]).data('note'); // the MIDI note
-                    // console.log(note);
-                    song[j].push(note);         // adds clicked notes by column
-                }
-            }
-        }
 
-        const songArray = JSON.stringify(song);
-        $.ajax({
-            url: 'php/save-song.php',
-            type: 'post',
-            //     contentType: 'application/json',
-            //      dataType: 'json',
-            data: {
-                songArray: songArray,
-                songName: songTitle,
-            },
-            success: function (s) {
-                alert("Cancion guardada!");
-            },
-            error: function (e) {
-                alert('Error guardando la cancion');
-            }
-        });
+        if((idOpenedSong>0) && (openedSongName==songTitle)){
+            // console.log("haciendo update");
+            // console.log(idOpenedSong);
+            // console.log(songArray);
+            $.ajax({
+                url: 'php/update-songArray.php',
+                type: 'post',
+                data: {
+                    songArray: songArray,
+                    songId: idOpenedSong,
+                },
+                success: function (s) {
+                    alert("Canción actualizada!");
+                },
+                error: function (e) {
+                    alert('Error guardando la cancion');
+                }
+            });
+        }
+        else {
+            // console.log("creando nuevo");
+            // console.log(songArray);
+            // console.log(songTitle);
+            $.ajax({
+                url: 'php/save-song.php',
+                type: 'post',
+                data: {
+                    songArray: songArray,
+                    songName: songTitle,
+                },
+                success: function (s) {
+                    alert("Canción guardada!");
+                },
+                error: function (e) {
+                    alert('Error guardando la cancion');
+                }
+            });
+        }
+        // class Song{
+            //     constructor(notes){
+            //         this.notes = notes;
+            //         this.modified = false;
+            //         this.loadedFromDb = false;
+            //         this.createOnFrontEnd = false;
+            //     }
+
+            //     updateSong(newNotes){
+            //         this.notes= newNotes;
+            //         this.modified = true;
+            //     }
+            // }
+            // const notesArray = fetch()
+            // const song = new Song(notesArray);   
     });
 
     document.getElementById('main-sequencer').appendChild(grid);

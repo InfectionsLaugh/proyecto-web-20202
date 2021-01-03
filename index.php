@@ -76,9 +76,9 @@ session_start();
                 <li class="nav-item active">
                     <a class="nav-link" href="index.php"><i class="fas fa-music"></i>Inicio</a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="#"><i class="far fa-folder-open"></i>Biblioteca</a>
-                </li>
+                </li> -->
                 <li class="nav-item">
                     <a class="nav-link" href="all-users.php" id="all-users"><i class="fas fa-users-cog"></i>Usuarios</a>
                 </li>
@@ -108,25 +108,32 @@ session_start();
         <div class="row no-gutters flex-grow-1">
             <div class="col-sm">
                 <div class="form-inline">
-                    <label class="navbar-text text-light" for="">Titulo: </label>
-                    <input class="form-control mr-sm-2" id="song-name" type="text" value="Sin titulo" aria-label="Nombre">
-                    <button class="btn btn-outline-success" id="song-save"><i class="fas fa-save fa-lg mr-0"></i></button>
-                    <button class="btn btn-outline-success" id="song-open"><i class="fas fa-folder-open fa-lg mr-0"></i></button>
-                    <button class="btn btn-outline-success" id="song-download"><i class="fas fa-download fa-lg mr-0"></i></button>
-                    <button class="btn btn-outline-success" id="song-delete"><i class="fas fa-trash-alt fa-lg mr-0"></i></button>
-                    <button class="btn btn-outline-success" id="song-play"><i class="far fa-play-circle fa-lg mr-0"></i></button>
-                    <button class="btn btn-outline-success" id="song-stop"><i class="fas fa-stop fa-lg mr-0"></i></button>
+                    <label class="navbar-text text-light" for="song-name">Título: </label>
+                    <input class="form-control mr-sm-2" id="song-name" type="text" value="Sin título" aria-label="Nombre">
+                    <button class="btn btn-outline-success piano-btn" id="song-new"><i class="far fa-file fa-lg mr-0"></i></button>
+                    <button class="btn btn-outline-success piano-btn" id="song-save"><i class="fas fa-save fa-lg mr-0"></i></button>
+                    <!-- <button class="btn btn-outline-success piano-btn" id="song-download"><i class="fas fa-download fa-lg mr-0"></i></button> -->
+                    <button class="btn btn-outline-success piano-btn" id="song-delete"><i class="fas fa-trash-alt fa-lg mr-0"></i></button>
                     
-                    <div class="dropdown">
+                    
+                </div>
+            </div>
+            <div class="col-sm">
+                <div class="form-inline">
+                <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Mis canciones
                         </button>
                         <div id="song-list" class="dropdown-menu scrollable-menu" aria-labelledby="dropdownMenu3">
                             
                         </div>
-                    </div>
+                </div>
+                <button class="btn btn-outline-success piano-btn" id="song-play"><i class="far fa-play-circle fa-lg mr-0"></i></button>
+                <button class="btn btn-outline-success piano-btn" id="song-stop"><i class="fas fa-stop fa-lg mr-0"></i></button>
+                    
                 </div>
             </div>
+
        
             <div class="col-sm justify-content-center d-flex">
                 <div class="dropdown">
