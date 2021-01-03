@@ -76,46 +76,52 @@ function clearSequencer() {
     }
 }
 
-function openSong(idSong){
+function openSong(idSong) {
     let sequencer = document.getElementById('sequencer');
-        let seq_len = sequencer.rows[0].cells.length;
+    let seq_len = sequencer.rows[0].cells.length;
 
-        clearSequencer();
+    clearSequencer();
 
-        fetch(`php/open-song.php?song_id=${idSong}`).then(res => {
-            console.log(res);
-            return res.json();
-        }).then(json => {
-            song = json;
+    fetch(`php/open-song.php?song_id=${idSong}`).then(res => {
+        console.log(res);
+        return res.json();
+    }).then(json => {
+        song = json;
 
-            for (let i = 0; i < song.length; i++) {
-                if (song[i].length > 0) {
-                    for (let j = 0; j < song[i].length; j++) {
-                        cellNote = sequencer.rows[keys.indexOf(song[i][j])].cells[i];
-                        $(cellNote).addClass('clicked');
-                        $(cellNote).html($(cellNote).data('note-name'));
-                    }
+        for (let i = 0; i < song.length; i++) {
+            if (song[i].length > 0) {
+                for (let j = 0; j < song[i].length; j++) {
+                    cellNote = sequencer.rows[keys.indexOf(song[i][j])].cells[i];
+                    $(cellNote).addClass('clicked');
+                    $(cellNote).html($(cellNote).data('note-name'));
                 }
             }
-        }).catch(error => console.log(error));
+        }
+    }).catch(error => console.log(error));
 }
 
-const loadSongValues = () =>{
+const loadSongValues = () => {
 
     fetch(`php/get_songs.php`)
-    .then(res => res.json())
-    .then(songNames => {
-        console.log(songNames)
-        songNames.forEach(songName => {
-            $('#song-list').append(`<a class="dropdown-item" href="#">${songName}</a>`);
-        });
+        .then(res => res.json())
+        .then(songNames => {
+            console.log(songNames)
 
-    }).catch(error => console.log(error));
+            songNames.forEach(songElement => {
+                $('#song-list').append(`<a class="dropdown-item" id="${songElement.id}" >${songElement.name}</a>`);
+
+                $(`#${songElement.id}`).click(e => {
+                        const songId = songElement.id;
+                        openSong(songId);
+                });
+            });
+
+        }).catch(error => console.log(error));
 
 }
 
 
-$(document).ready(function() { 
+$(document).ready(function () {
     loadSongValues();
 });
 
@@ -166,7 +172,7 @@ window.onload = function () {
 
     let playStop;
 
-//reproducir cancion
+    //reproducir cancion
     $('#song-play').click(function (e) {
         let sequencer = document.getElementById('sequencer');
         let seq_len = sequencer.rows[0].cells.length;
@@ -207,7 +213,7 @@ window.onload = function () {
             j++;
         }, time);
     });
-//detener la cancion
+    //detener la cancion
     $('#song-stop').click(function (e) {
         $('#playhead').css('display', 'none');
         $('#playhead-line').css('display', 'none');
@@ -217,15 +223,15 @@ window.onload = function () {
         y = 0;
         clearInterval(playStop);
     })
-// borrar notas en tablero
+    // borrar notas en tablero
     $('#song-delete').click(function (e) {
         clearSequencer();
     })
-// abrir cancion en tablero
+    // abrir cancion en tablero
     $('#song-open').click(function (e) {
         openSong(14);                       // la funcion ya sirve
     })
-//guardar cancion en tablero
+    //guardar cancion en tablero
     $('#song-save').click(function (e) {
         // let song = [];
         let songTitle = $('#song-name').val();

@@ -1,6 +1,26 @@
 <?php
 session_start();
+
+if(isset($_GET["option"]))
+	$option=$_GET["option"];
+else 
+	$option=1;
+switch($option) {
+    case 1:
+        $titulo="Mis canciones";
+		$contenido="php/display-songs.php";
+	break;
+    case 2:
+        $titulo="Editar cancion";
+		$contenido="php/edit-song.php";
+	break;	
+    case 3:
+        $titulo="Actualizando";
+		$contenido="php/update-songData.php";					
+	break;	
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -80,12 +100,16 @@ session_start();
             </div>
         </div>
     </nav>
-  <div class="container">
+    <div class="container">
     <div class="row gutters-sm">
-    
+    <h2 id="title-header">		
+		<?php 
+		echo $titulo; 
+	  	?>	  	
+          </h2>
           <br><br>
 
-    <?php include 'php/display-songs.php'; ?>      
+    <?php include $contenido; ?>      
     
     </div>
 

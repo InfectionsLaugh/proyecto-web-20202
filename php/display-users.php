@@ -3,14 +3,9 @@
 require('php/connect.php');
 
 if (!$mysqli->connect_errno) {
-    // $stmt = $mysqli->prepare("SELECT * FROM song WHERE user_id = ?");
-    $stmt = $mysqli->prepare("SELECT * FROM user");
-    // $stmt->bind_param("s", $userId,);
-
+    $stmt = $mysqli->prepare("SELECT user_id, user_name as `Usuario`, name as `Nombre`, email as `Email`, created_at  as `Creado`, updated_at as `Actualizado` FROM user");
     $stmt->execute();
-
     $result = $stmt->get_result();
-
 
 // desplegado de resultados de la consulta
 echo "<table><tr>";
@@ -32,10 +27,8 @@ echo "<table><tr>";
         echo $row[$atributo->name];
         echo '</td>';
       }
-      echo '<td><a href="all-users.php?option=2&userId='.$row["user_id"].'"><i class="far fa-edit" style="font-size:20px;color:#808080"></i></a>';
-        echo '<td><a href="delete-user.php?userId='.$row["user_id"].'"><i class="far fa-trash-alt" style="font-size:20px;color:#808080"></i></a>';
-    //   echo '<td><a href="index.php?op=9&id_cliente='.$row["user_id"].'"><i class="far fa-edit" style="font-size:20px;color:#808080"></i></a>';
-    //   echo '<td><a href="delete_cliente.php?&id_cliente='.$row["user_id"].'"><i class="far fa-trash-alt" style="font-size:20px;color:#808080"></i></a>';
+      echo '<td><a href="all-users.php?option=2&userId='.$row["user_id"].'"><i class="far fa-edit" style="font-size:20px;color:#808080"></i></a></td>';
+        echo '<td><a href="delete-user.php?userId='.$row["user_id"].'"><i class="far fa-trash-alt" style="font-size:20px;color:#808080"></i></a></td>';
       echo"</tr>";      
     }
     echo "</table>";

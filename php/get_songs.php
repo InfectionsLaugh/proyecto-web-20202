@@ -7,7 +7,7 @@ $userId =  $_SESSION['id'];
 
 // $userId = 4;
 
-$stmt = $mysqli->prepare("SELECT song_name from song where user_id= ?");  
+$stmt = $mysqli->prepare("SELECT song_id, song_name from song where user_id= ?");  
 $stmt->bind_param("i",$userId);   
 $stmt->execute();
 
@@ -17,7 +17,9 @@ $rows = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 $songs = [];
 
 foreach($rows as $row ){
-    $songs[] = $row['song_name'];
+    $songs[] = array('id' => $row['song_id'],
+                    'name' =>   $row['song_name']);
+   
 }
 
 
