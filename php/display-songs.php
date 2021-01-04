@@ -12,26 +12,27 @@ if (!$mysqli->connect_errno) {
     $stmt->execute();
     $songs = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     
-    //Consulta albumes
-    $stmt = $mysqli->prepare("SELECT album_id, album_name, created_at FROM `album` where user_id = ?");
-    $stmt->bind_param("i", $userId,);
-    $stmt->execute();
-    $albums = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-
     // Desplegar tabla canciones
     echo '<table>
             <tr>
-              <th>Título</th> <th>Album</th> <th>Creada</th> <th>Actualizada</th> <th>Eliminar</th>
+              <th>Título</th> <th>Album</th> <th>Creada</th> <th>Actualizada</th> <th>Editar</th> <th>Eliminar</th>
             </tr>';
     foreach($songs as $song ){
       echo '<tr>
-        <td>'.$song['song_name'].'
-        <a href="view-songs.php?option=2&song_id='.$song["song_id"].'">
-        <i class="far fa-edit" style="font-size:20px;color:#808080"></i></a>
-        </td>
-        <td>'.$song['album_name'].'</td>
+        <td>'.$song['song_name'].'</td>
+        <td>';
+
+        if($song['album_name']==null)
+          echo 'Sin álbum';
+        else
+          echo $song['album_name'];
+        
+        echo '</td>
         <td>'.$song['created_at'].'</td>
         <td>'.$song['updated_at'].'</td>
+        <td><a href="view-songs.php?option=2&song_id='.$song["song_id"].'">
+        <i class="far fa-edit" style="font-size:20px;color:#808080"></i></a>
+        </td>
         <td><a href="delete-song.php?song_id='.$song["song_id"].'">
             <i class="far fa-trash-alt" style="font-size:20px;color:#808080"></i>
             </a>
@@ -39,18 +40,6 @@ if (!$mysqli->connect_errno) {
       </tr>';
     }
     echo '</table>';
-
-
-    echo '<select name="albumes[]" required>';
-      foreach($albums as $album ){
-        echo '<option value="'.$album['album_id'].'"';
-        // if($row==$album){
-        //   echo 'selected';
-        // }
-        echo '>'.$album['album_name'].'</option>'; 
-      }
-      echo '</select><p></p>';
-
          
 }
 ?>
