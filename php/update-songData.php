@@ -4,12 +4,10 @@ require('php/connect.php');
 
 $songId = $_GET['song_id'];
 $songName = $_POST['name'];
-
-echo $songId;
-echo $songName;
+$album_id = $_POST['albumes'];
 if (!$mysqli->connect_errno) {
-    $stmt = $mysqli->prepare("UPDATE song SET song_name = ? WHERE song_id= ?");
-    $stmt->bind_param("si", $songName, $songId);
+    $stmt = $mysqli->prepare("UPDATE song SET song_name = ?, album_id = ? WHERE song_id= ?");
+    $stmt->bind_param("sii", $songName, $album_id, $songId);
 
     $stmt->execute();
 }
