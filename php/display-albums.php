@@ -10,7 +10,7 @@
       </div>
     </div>
     <div class="row gutters-sm">
-      <h2 id="title-header"><?= $titulo ?></h2><br><br>
+      <h2 id="title-header">Mis álbumes</h2><br><br>
 
 
 <?php

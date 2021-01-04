@@ -14,10 +14,10 @@ if (!$mysqli->connect_errno) {
 }
 ?>
 
-<div class="form-style-6" align="center">
+<div id="form-insert" align="center">
     <form action="view-albums.php?option=3&album_id=<?=$album_id?>" method="post">
-        <input type="text" name="name" id="name" required><br> 
         <label for="name">Título de álbum</label>
+        <input type="text" name="name" id="name" required><br> 
         <input type="submit" value="Editar"></p>
     </form>
 </div>
