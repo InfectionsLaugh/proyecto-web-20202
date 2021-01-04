@@ -1,3 +1,18 @@
+
+</div>
+    <div class="row gutters-sm">
+      <div id="form-insert" align=center>
+        <form action="create-album.php" method="post">
+          <label for="name">Título de álbum</label>
+          <input type="text" name="name" id="name" required>
+          <input type="submit" value="Crear"></p>
+        </form>
+      </div>
+    </div>
+    <div class="row gutters-sm">
+      <h2 id="title-header"><?= $titulo ?></h2><br><br>
+
+
 <?php
 
 require('php/connect.php');
@@ -13,7 +28,7 @@ if (!$mysqli->connect_errno) {
     $albums = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
     //Desplegar tabla albumes
-
+  
     echo '<table>
             <tr>
               <th>Título</th> <th>Creado</th> <th>Editar</th>  <th>Eliminar</th>

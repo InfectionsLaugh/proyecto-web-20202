@@ -11,7 +11,7 @@ else
 	$option=1;
 switch($option) {
     case 1:
-        $titulo="Mis albumes";
+        $titulo="Crear nuevo álbum";
 		$contenido="php/display-albums.php";
 	break;
     case 2:
@@ -99,7 +99,11 @@ switch($option) {
   <div class="container">
     <div class="row gutters-sm">
       <h2 id="title-header"><?= $titulo ?></h2><br><br>
-      <?php include $contenido; ?>      
+    
+    
+
+      <?php include $contenido; ?>
+
     </div>
     <br><br>
   </div>

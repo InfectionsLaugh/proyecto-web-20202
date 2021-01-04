@@ -4,7 +4,6 @@ $album_id=$_GET['album_id'];
 
 require('php/connect.php');
 
-echo "edit album";
 if (!$mysqli->connect_errno) {
     
     $stmt = $mysqli->prepare("SELECT album_name, created_at from album where album_id=?");
