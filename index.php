@@ -69,17 +69,23 @@ session_start();
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
-                <div class="hori-selector">
-                    <div class="left"></div>
-                    <div class="right"></div>
-                </div>
-                <li class="nav-item active">
-                    <a class="nav-link" href="#"><i class="fas fa-music"></i>Inicio</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="far fa-folder-open"></i>Biblioteca</a>
-                </li>
+
                 <?php if (isset($_SESSION["user_name"])) { ?>
+                    <div class="hori-selector">
+                        <div class="left"></div>
+                        <div class="right"></div>
+                    </div>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#"><i class="fas fa-music"></i>Inicio</a>
+                    </li>
+                    <?php if ($_SESSION["user_name"] == 'admin') { ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="all-users.php" id="all-users"><i class="fas fa-users-cog"></i>Usuarios</a>
+                        </li>
+                    <?php } ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="view-songs.php" id="my-songs"><i class="fas fa-user"></i>Canciones</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="home.php" id="userDropdownBtn"><i class="fas fa-user"></i><?= $_SESSION["user_name"] ?></a>
                     </li>
@@ -87,12 +93,14 @@ session_start();
                         <a class="nav-link" href="#" id="logout"><i class="fas fa-sign-out-alt"></i>Cerrar Sesión</a>
                     </li>
                 <?php } else { ?>
-                    <li class="nav-item">
+                    <button type="button" class="btn nav-btns btn-login open-login"><i class="fas fa-sign-in-alt"></i>Iniciar Sesión</button>
+                    <button type="button" class="btn nav-btns btn-register open-register"><i class="fas fa-user-plus"></i>Registrarse</button>
+                    <!-- <li class="nav-item">
                         <a class="nav-link open-login" href="#"><i class="fas fa-sign-in-alt"></i>Iniciar Sesion</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link open-register" href="#"><i class="fas fa-user-plus"></i>Registrarse</a>
-                    </li>
+                    </li> -->
                 <?php } ?>
             </ul>
         </div>
@@ -102,16 +110,32 @@ session_start();
         <div class="row no-gutters flex-grow-1">
             <div class="col-sm">
                 <div class="form-inline">
-                    <input class="form-control mr-sm-2" id="song-name" type="text" placeholder="Nombre" aria-label="Nombre">
+                    <input class="form-control mr-sm-2" id="song-name" type="text" placeholder="Título de la canción" aria-label="Nombre">
                     <button class="btn lh-0 btn-outline-success" id="song-download"><i class="fas fa-download mr-0"></i></button>
-                    <button class="btn lh-0 btn-outline-success" id="song-save"><i class="fas fa-save mr-0"></i></button>
+                    <?php if (isset($_SESSION["user_name"])) { ?>
+                        <button class="btn lh-0 btn-outline-success piano-btn" id="song-save"><i class="fas fa-save fa-lg mr-0"></i></button>
+                    <?php } else { ?>
+                        <button class="btn lh-0 btn-outline-success piano-btn disabled" id="song-save"><i class="fas fa-save fa-lg mr-0"></i></button>
+                    <?php } ?>
                     <button class="btn lh-0 btn-outline-success" id="song-delete"><i class="fas fa-trash-alt mr-0"></i></button>
                     <button class="btn lh-0 btn-outline-success" id="song-play"><i class="far fa-play-circle mr-0"></i></button>
                     <button class="btn lh-0 btn-outline-success" id="song-stop"><i class="fas fa-stop mr-0"></i></button>
                     <button class="btn lh-0 btn-outline-success" id="song-open" data-toggle="modal" data-target="#openMidiModal"><i class="fas fa-folder-open mr-0"></i></button>
+
                 </div>
             </div>
+
             <div class="col-sm justify-content-center d-flex">
+                <?php if (isset($_SESSION["user_name"])) { ?>
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Mis canciones
+                        </button>
+                        <div id="song-list" class="dropdown-menu scrollable-menu" aria-labelledby="dropdownMenu3">
+
+                        </div>
+                    </div>
+                <?php } ?>
                 <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Instrumento
@@ -204,7 +228,7 @@ session_start();
                                 </div>
                                 <div class="form-group mb-4">
                                     <label for="password" class="sr-only">Contraseña</label>
-                                    <input type="password" name="login-password" id="login-password" class="form-control" placeholder="***********">
+                                    <input type="password" name="login-password" id="login-password" class="form-control" placeholder="Contraseña">
                                 </div>
                                 <input name="login" id="login" class="btn btn-block login-btn mb-4" type="button" value="Ingresar">
                             </form>
@@ -237,11 +261,11 @@ session_start();
                 <div class="modal-body">
                     <p>Recuerda que no todos los archivos MIDI funcionarán bien. Los archivos simples funcionan mejor.</p>
                     <p>
-                        <form>
-                            <div class="form-group">
-                                <input type="file" accept=".mid" class="form-control-file" id="exampleFormControlFile1">
-                            </div>
-                        </form>
+                    <form>
+                        <div class="form-group">
+                            <input type="file" accept=".mid" class="form-control-file" id="exampleFormControlFile1">
+                        </div>
+                    </form>
                     </p>
                 </div>
                 <div class="modal-footer">

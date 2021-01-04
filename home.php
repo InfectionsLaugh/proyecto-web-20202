@@ -1,5 +1,8 @@
 <?php
 session_start();
+if (!isset($_SESSION["user_name"])) {
+  header("Location:index.php");
+}
 ?>
 
 <!DOCTYPE html>
@@ -18,13 +21,14 @@ session_start();
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="css/navbar.css">
   <link rel="stylesheet" href="css/login.css">
-
+  <link rel="stylesheet" href="css/table.css">
 
 
   <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
   <script type="text/javascript" src="js/bootstrap.min.js"></script>
   <script type="text/javascript" src="js/navbar.js"></script>
   <script type="text/javascript" src="js/icons.js"></script>
+
 
 
 </head>
@@ -44,14 +48,19 @@ session_start();
         <li class="nav-item">
           <a class="nav-link" href="index.php"><i class="fas fa-music"></i>Inicio</a>
         </li>
+        <?php if ($_SESSION["user_name"] == 'admin') { ?>
+          <li class="nav-item">
+            <a class="nav-link" href="all-users.php" id="all-users"><i class="fas fa-users-cog"></i>Usuarios</a>
+          </li>
+        <?php } ?>
         <li class="nav-item">
-          <a class="nav-link" href="javascript:void(0);"><i class="far fa-folder-open"></i>Biblioteca</a>
+          <a class="nav-link" href="view-songs.php" id="my-songs"><i class="fas fa-user"></i>Canciones</a>
         </li>
-        <li class="nav-item  active">
+        <li class="nav-item active">
           <a class="nav-link" href="#" id="userDropdownBtn"><i class="fas fa-user"></i><?= $_SESSION["user_name"] ?></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="javascript:void(0);"><i class="fas fa-sign-out-alt"></i>Cerrar Sesion</a>
+          <a class="nav-link" href="#" id="logout"><i class="fas fa-sign-out-alt"></i>Cerrar Sesión</a>
         </li>
       </ul>
     </div>
@@ -106,66 +115,116 @@ session_start();
               <h6>TU INFORMACION PERSONAL</h6>
               <hr>
               <div class="form-group">
-                <p>Nombre de usuario:</p>
+                <div class="row">
+                  <div class="col">
+                    <p>Nombre de usuario:</p>
+                  </div>
+                  <div class="col">
+                    <div class="form-group user_name text-muted"><?= $_SESSION["user_name"] ?></div>
+                  </div>
+                  <div class="col-md-2">
+                    <button data-toggle="modal" data-info="user_name" data-target="#editInfoModal" class="btn edit-info btn-outline-success lh-0"><i style="margin-right:0" class="fas fa-wrench"></i></button>
+                  </div>
+                </div>
               </div>
-              <div class="form-group small text-muted"><?= $_SESSION["user_name"] ?></div>
 
               <div class="form-group">
-                <p>Nombre completo:</p>
+                <div class="row">
+                  <div class="col">
+                    <p>Nombre completo:</p>
+                  </div>
+                  <div class="col">
+                    <div class="form-group name text-muted"><?= $_SESSION["name"] ?></div>
+                  </div>
+                  <div class="col-md-2">
+                    <button data-toggle="modal" data-target="#editInfoModal" data-info="name" class="btn edit-info btn-outline-success lh-0"><i style="margin-right:0" class="fas fa-wrench"></i></button>
+                  </div>
+                </div>
               </div>
-              <div class="form-group small text-muted"><?= $_SESSION["name"] ?></div>
 
               <div class="form-group">
-                <p>Correo electrónico:</p>
+                <div class="row">
+                  <div class="col">
+                    <p>Correo electrónico:</p>
+                  </div>
+                  <div class="col">
+                    <div class="form-group email text-muted"><?= $_SESSION["email"] ?></div>
+                  </div>
+                  <div class="col-md-2">
+                    <button data-toggle="modal" data-info="email" data-target="#editInfoModal" class="btn edit-info btn-outline-success lh-0"><i style="margin-right:0" class="fas fa-wrench"></i></button>
+                  </div>
+                </div>
               </div>
-              <div class="form-group small text-muted"><?= $_SESSION["email"] ?></div>
 
               <div class="form-group">
-                <p>Miembro desde:</p>
+                <div class="row">
+                  <div class="col">
+                    <p>Miembro desde:</p>
+                  </div>
+                  <div class="col">
+                    <div class="form-group text-muted"><?= $_SESSION["created_at"] ?></div>
+                  </div>
+                  <div class="col-md-2">
+                  </div>
+                </div>
               </div>
-              <div class="form-group small text-muted">11-19-2020</div>
-
-
-
             </div>
             <div class="tab-pane" id="account">
               <h6>AJUSTES DE CUENTA</h6>
               <hr>
-              <form>
+              <form action="edit-profile.php" method="post">
                 <div class="form-group">
                   <label for="username">Cambiar nombre personal</label>
-                  <input type="text" class="form-control" id="username" aria-describedby="usernameHelp" placeholder="Ingresa tu nombre" value="Nombre actual">
+                  <input type="text" class="form-control" name="name" id="name" aria-describedby="usernameHelp" placeholder="Ingresa tu nombre">
                 </div>
                 <hr>
                 <div class="form-group">
                   <label for="username">Cambiar correo electronico</label>
-                  <input type="text" class="form-control" id="username" aria-describedby="usernameHelp" placeholder="Nuevo correo electronico" value="correo-actual@gmail.com">
+                  <input type="text" class="form-control" name="email" id="email" aria-describedby="usernameHelp" placeholder="Nuevo correo electrónico">
                 </div>
                 <hr>
                 <div class="form-group">
                   <label class="d-block">Cambiar contrasena</label>
-                  <input type="text" class="form-control" placeholder="Ingresa tu contrasena actual">
-                  <input type="text" class="form-control mt-1" placeholder="Nueva contrasena">
-                  <input type="text" class="form-control mt-1" placeholder="Confirma tu nueva contrasena">
+                  <input type="text" class="form-control" name="current-pass" id="current-pass" placeholder="Ingresa tu contraseña actual">
+                  <input type="text" class="form-control mt-1" name="new-pass" id="new-pass" placeholder="Nueva contraseña">
+                  <input type="text" class="form-control mt-1" name="confirm-new-pass" id="confirm-new-pass" placeholder="Confirma tu nueva contraseña">
                 </div>
-                <button type="button" class="btn btn-primary">Update Profile</button>
-                <button type="reset" class="btn btn-light">Reset Changes</button>
+                <input type="submit" class="btn btn-primary" value="Save"></input>
+                <button type="button" class="btn btn-primary">Actualizar perfil</button>
+                <!-- <button type="reset" class="btn btn-light">Reset Changes</button> -->
               </form>
-            </div>
-            <div class="tab-pane" id="songs">
-              <h6>MIS CANCIONES</h6>
-              <hr>
-
             </div>
           </div>
         </div>
       </div>
     </div>
 
+    <div class="modal fade" id="editInfoModal" tabindex="-1" role="dialog" aria-labelledby="editInfoModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editInfoModalLabel">Editar información personal</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <input type="text" id="modal-data" class="form-control" placeholder="Ingresa tu nuevo nombre de usuario">
+            <div style="display: none" class="alert alert-danger"></div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" id="save-info" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script src="js/login.js"></script>
+  <script src="js/user.js"></script>
 </body>
 
 </html>

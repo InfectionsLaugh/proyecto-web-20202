@@ -14,6 +14,7 @@ $(document).ready(function () {
     });
 
     $('#login').click(function (e) {
+        e.preventDefault();
         $.ajax({
             url: 'php/user.php',
             type: 'post',
@@ -39,6 +40,7 @@ $(document).ready(function () {
     });
 
     $('#sign-up').click(function (e) {
+        e.preventDefault();
         $.ajax({
             url: 'php/register.php',
             type: 'post',
@@ -49,7 +51,8 @@ $(document).ready(function () {
                 password: $('#sign-up-password').val()
             },
             success: function (e) {
-                if (e.result == "success")
+                var res = JSON.parse(e);
+                if (res.result == "success")
                     location.reload();
                 else
                     console.log('adios');

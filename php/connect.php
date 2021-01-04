@@ -8,6 +8,11 @@ $db_host = $credentials["mysql_host"];
 $db_user = $credentials["mysql_user"];
 $db_pass = $credentials["mysql_pass"];
 
+// $db = "pianoapp";
+// $db_host = "localhost";
+// $db_user = "root";
+// $db_pass = "";
+
 $mysqli = new mysqli($db_host, $db_user, $db_pass, $db);
 
 if ($mysqli->connect_errno) {
