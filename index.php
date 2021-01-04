@@ -118,12 +118,11 @@ session_start();
                     <?php if (isset($_SESSION["user_name"])) { ?>
                         <button class="btn lh-0 btn-outline-success piano-btn" id="song-save"><i class="fas fa-save fa-lg mr-0"></i></button>
                     <?php } else { ?>
-                        <button class="btn lh-0 btn-outline-success piano-btn disabled" id="song-save"><i class="fas fa-save fa-lg mr-0"></i></button>
+                        <button class="btn lh-0 btn-outline-success piano-btn disabled" disabled id="song-save"><i class="fas fa-save fa-lg mr-0"></i></button>
                     <?php } ?>
                     <button class="btn lh-0 btn-outline-success" id="song-delete"><i class="fas fa-trash-alt mr-0"></i></button>
                     <button class="btn lh-0 btn-outline-success" id="song-play"><i class="far fa-play-circle mr-0"></i></button>
                     <button class="btn lh-0 btn-outline-success" id="song-stop"><i class="fas fa-stop mr-0"></i></button>
-                    <button class="btn lh-0 btn-outline-success" id="song-open" data-toggle="modal" data-target="#openMidiModal"><i class="fas fa-folder-open mr-0"></i></button>
 
                 </div>
             </div>
