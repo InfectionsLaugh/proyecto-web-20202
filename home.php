@@ -78,9 +78,9 @@ if (!isset($_SESSION["user_name"])) {
               <a href="#account" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded">
                 <i class="fas fa-user-cog"></i>Ajustes
               </a>
-              <a href="#songs" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded">
+              <!-- <a href="#songs" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded">
                 <i class="far fa-file-audio"></i>Mis canciones
-              </a>
+              </a> -->
             </nav>
           </div>
         </div>

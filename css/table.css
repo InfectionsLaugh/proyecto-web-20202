@@ -75,9 +75,63 @@ tbody tr:hover {
 
 /*Forms*/
 
+  #form-insert{
+    margin: 10px auto;
+    padding: 16px;
+    /* background: #F7F7F7; */
+  }
+  #form-insert input[type="text"],
+  #form-insert input[type="email"],
+  #form-insert input[type="number"],
+  #form-insert textarea,
+  #form-insert select 
+  {
+    -webkit-transition: all 0.30s ease-in-out;
+    -moz-transition: all 0.30s ease-in-out;
+    -ms-transition: all 0.30s ease-in-out;
+    -o-transition: all 0.30s ease-in-out;
+    outline: none;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    background: #fff;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 4%;
+    border: 1px solid #ccc;
+    color: #555;
+  }
+  #form-insert input[type="text"]:focus,
+  #form-insert input[type="email"]:focus,
+  #form-insert input[type="number"]:focus,
+  #form-insert input[type="search"]:focus,
+  #form-insert textarea:focus,
+  #form-insert select:focus
+  {
+    box-shadow: 0 0 5px #43D1AF;
+    border: 1px solid #43D1AF;
+  }
+  
+  #form-insert input[type="submit"],
+  #form-insert input[type="button"]{
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    padding: 2% 4%;
+    background: #43D1AF;
+    border-bottom: 2px solid #30C29E;
+    border-top-style: none;
+    border-right-style: none;
+    border-left-style: none;  
+    color: #fff;
+  }
+  #form-insert input[type="submit"]:hover,
+  #form-insert input[type="button"]:hover{
+    background: #2EBC99;
+  } 
 
 
-.form-style-6{
+  .form-style-6{
     font: 95% Arial, Helvetica, sans-serif;
     max-width: 400px;
     margin: 10px auto;
@@ -121,13 +175,9 @@ tbody tr:hover {
     font: 95% Arial, Helvetica, sans-serif;
   }
   .form-style-6 input[type="text"]:focus,
-  .form-style-6 input[type="date"]:focus,
-  .form-style-6 input[type="datetime"]:focus,
   .form-style-6 input[type="email"]:focus,
   .form-style-6 input[type="number"]:focus,
   .form-style-6 input[type="search"]:focus,
-  .form-style-6 input[type="time"]:focus,
-  .form-style-6 input[type="url"]:focus,
   .form-style-6 textarea:focus,
   .form-style-6 select:focus
   {
@@ -153,4 +203,4 @@ tbody tr:hover {
   .form-style-6 input[type="submit"]:hover,
   .form-style-6 input[type="button"]:hover{
     background: #2EBC99;
-  }
+  } 

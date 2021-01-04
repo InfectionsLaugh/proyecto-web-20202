@@ -11,17 +11,17 @@ else
 	$option=1;
 switch($option) {
     case 1:
-        $titulo="Mis canciones";
-		$contenido="php/display-songs.php";
+        $titulo="Crear nuevo álbum";
+		$contenido="php/display-albums.php";
 	break;
     case 2:
-        $titulo="Editar cancion";
-		$contenido="php/edit-song.php";
-	break;	
+    $titulo="Editar album";
+    $contenido="php/edit-album.php";
+    break;	
     case 3:
         $titulo="Actualizando";
-		$contenido="php/update-songData.php";					
-  break;
+    $contenido="php/update-album.php";					
+    break;	
 }
 ?>
 
@@ -72,10 +72,10 @@ switch($option) {
               <a class="nav-link" href="all-users.php" id="all-users"><i class="fas fa-users-cog"></i>Usuarios</a>
           </li>
         <?php } ?>
-        <li class="nav-item">
+        <li class="nav-item active">
             <a class="nav-link" href="view-albums.php" id="my-albums"><i class="fas fa-compact-disc"></i>Mis Albumes</a>
         </li>
-        <li class="nav-item active">
+        <li class="nav-item">
             <a class="nav-link" href="view-songs.php" id="my-songs"><i class="fas fa-file-audio"></i>Mis Canciones</a>
         </li>
         <li class="nav-item ">
@@ -99,7 +99,11 @@ switch($option) {
   <div class="container">
     <div class="row gutters-sm">
       <h2 id="title-header"><?= $titulo ?></h2><br><br>
-      <?php include $contenido; ?>      
+    
+    
+
+      <?php include $contenido; ?>
+
     </div>
     <br><br>
   </div>

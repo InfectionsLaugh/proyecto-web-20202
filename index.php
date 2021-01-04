@@ -84,7 +84,10 @@ session_start();
                         </li>
                     <?php } ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="view-songs.php" id="my-songs"><i class="fas fa-user"></i>Canciones</a>
+                        <a class="nav-link" href="view-albums.php" id="my-albums"><i class="fas fa-compact-disc"></i>Mis Albumes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="view-songs.php" id="my-songs"><i class="fas fa-file-audio"></i>Mis Canciones</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="home.php" id="userDropdownBtn"><i class="fas fa-user"></i><?= $_SESSION["user_name"] ?></a>

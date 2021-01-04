@@ -4,7 +4,6 @@ require('php/connect.php');
 
 $userId = $_GET['userId'];
 
-echo $userId;
 
 if (!$mysqli->connect_errno) {
     $stmt = $mysqli->prepare("DELETE FROM user WHERE user_id= ?");
