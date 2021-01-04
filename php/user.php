@@ -85,6 +85,33 @@ if (!isset($_POST['edit'])) {
                     echo json_encode($arr);
                 }
             }
+        } else if ($field == "password") {
+            $stmt = $mysqli->prepare("SELECT password FROM user WHERE password = MD5(?)");
+            $stmt->bind_param("s", $_POST['data']);
+
+            $stmt->execute();
+
+            $result = $stmt->get_result()->fetch_assoc();
+
+            if ($result != null) {
+                $arr = ['result' => 'fail', 'message' => 'Tu nueva contraseña no puede ser igual a tu vieja contraseña'];
+                echo json_encode($arr);
+            } else {
+                $stmt = $mysqli->prepare("UPDATE user SET password = MD5(?) WHERE user_id = ?");
+                $stmt->bind_param("si", $_POST['data'], $_SESSION['id']);
+
+                $stmt->execute();
+
+                $result = $stmt->get_result();
+
+                if ($result == false) {
+                    $arr = ['result' => 'success', 'message' => 'Contraseña actualizada correctamente', 'value' => $_POST['data']];
+                    echo json_encode($arr);
+                } else {
+                    $arr = ['result' => 'fail', 'message' => 'Error actualizando contraseña'];
+                    echo json_encode($arr);
+                }
+            }
         } else {
             $stmt = $mysqli->prepare("UPDATE user SET name = ? WHERE user_id = ?");
             $stmt->bind_param("si", $_POST['data'], $_SESSION['id']);

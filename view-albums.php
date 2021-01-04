@@ -73,7 +73,7 @@ switch($option) {
           </li>
         <?php } ?>
         <li class="nav-item active">
-            <a class="nav-link" href="view-albums.php" id="my-albums"><i class="fas fa-compact-disc"></i>Mis Albumes</a>
+            <a class="nav-link" href="#" id="my-albums"><i class="fas fa-compact-disc"></i>Mis Albumes</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="view-songs.php" id="my-songs"><i class="fas fa-file-audio"></i>Mis Canciones</a>

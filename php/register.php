@@ -19,7 +19,7 @@ if (!$mysqli->connect_errno) {
     echo json_encode($result);
 
     $stmt = $mysqli->prepare("SELECT * FROM user WHERE user_name = ? AND password = ?");
-    $stmt->bind_param("ss", $user_name, $user_pass);
+    $stmt->bind_param("ss", $username, $password);
 
     $stmt->execute();
 
@@ -31,6 +31,6 @@ if (!$mysqli->connect_errno) {
 
     if($result != null) {
         $_SESSION["created_at"] = $result['created_at'];
-        $_SESSION["id"] = $result['user_id'];
+        $_SESSION["id"] = $result["user_id"];
     }
 }

@@ -70,7 +70,7 @@ switch($option) {
                 <?php if (isset($_SESSION["user_name"])) { ?>
                     <?php if($_SESSION["user_name"]=='admin') { ?>
                     <li class="nav-item active">
-                        <a class="nav-link" href="all-users.php" id="all-users"><i class="fas fa-users-cog"></i>Usuarios</a>
+                        <a class="nav-link" href="#" id="all-users"><i class="fas fa-users-cog"></i>Usuarios</a>
                     </li>
                     <?php } ?>
                     <li class="nav-item">

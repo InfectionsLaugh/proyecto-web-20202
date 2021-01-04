@@ -7,6 +7,12 @@ $(document).ready(function () {
         var dataInfo = $(this).data('info');
         console.log($(this).data('info'));
 
+        if(dataInfo == "password") {
+            $('#modal-data').attr('type', 'password');
+        } else {
+            $('#modal-data').attr('type', 'text');
+        }
+
         $("#modal-data").val(info);
         $('#editInfoModal').css('display', 'block');
         $("#save-info").attr('data-info', dataInfo);

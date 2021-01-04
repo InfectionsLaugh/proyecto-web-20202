@@ -41,27 +41,41 @@ if (!isset($_SESSION["user_name"])) {
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto">
-        <div class="hori-selector">
-          <div class="left"></div>
-          <div class="right"></div>
-        </div>
-        <li class="nav-item">
-          <a class="nav-link" href="index.php"><i class="fas fa-music"></i>Inicio</a>
-        </li>
-        <?php if ($_SESSION["user_name"] == 'admin') { ?>
+        <?php if (isset($_SESSION["user_name"])) { ?>
+          <div class="hori-selector">
+            <div class="left"></div>
+            <div class="right"></div>
+          </div>
           <li class="nav-item">
-            <a class="nav-link" href="all-users.php" id="all-users"><i class="fas fa-users-cog"></i>Usuarios</a>
+            <a class="nav-link" href="index.php"><i class="fas fa-music"></i>Inicio</a>
           </li>
+          <?php if ($_SESSION["user_name"] == 'admin') { ?>
+            <li class="nav-item">
+              <a class="nav-link" href="all-users.php" id="all-users"><i class="fas fa-users-cog"></i>Usuarios</a>
+            </li>
+          <?php } ?>
+          <li class="nav-item">
+            <a class="nav-link" href="view-albums.php" id="my-albums"><i class="fas fa-compact-disc"></i>Mis Albumes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="view-songs.php" id="my-songs"><i class="fas fa-file-audio"></i>Mis Canciones</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="#" id="userDropdownBtn"><i class="fas fa-user"></i><?= $_SESSION["user_name"] ?></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" id="logout"><i class="fas fa-sign-out-alt"></i>Cerrar Sesión</a>
+          </li>
+        <?php } else { ?>
+          <button type="button" class="btn nav-btns btn-login open-login"><i class="fas fa-sign-in-alt"></i>Iniciar Sesión</button>
+          <button type="button" class="btn nav-btns btn-register open-register"><i class="fas fa-user-plus"></i>Registrarse</button>
+          <!-- <li class="nav-item">
+                        <a class="nav-link open-login" href="#"><i class="fas fa-sign-in-alt"></i>Iniciar Sesion</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link open-register" href="#"><i class="fas fa-user-plus"></i>Registrarse</a>
+                    </li> -->
         <?php } ?>
-        <li class="nav-item">
-          <a class="nav-link" href="view-songs.php" id="my-songs"><i class="fas fa-user"></i>Canciones</a>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link" href="#" id="userDropdownBtn"><i class="fas fa-user"></i><?= $_SESSION["user_name"] ?></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#" id="logout"><i class="fas fa-sign-out-alt"></i>Cerrar Sesión</a>
-        </li>
       </ul>
     </div>
   </nav>
@@ -75,9 +89,9 @@ if (!isset($_SESSION["user_name"])) {
               <a href="#profile" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded active">
                 <i class="fas fa-user"></i>Mi perfil
               </a>
-              <a href="#account" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded">
+              <!-- <a href="#account" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded">
                 <i class="fas fa-user-cog"></i>Ajustes
-              </a>
+              </a> -->
               <!-- <a href="#songs" data-toggle="tab" class="nav-item nav-link has-icon nav-link-faded">
                 <i class="far fa-file-audio"></i>Mis canciones
               </a> -->
@@ -159,6 +173,20 @@ if (!isset($_SESSION["user_name"])) {
               <div class="form-group">
                 <div class="row">
                   <div class="col">
+                    <p>Contraseña:</p>
+                  </div>
+                  <div class="col">
+                    <div class="form-group text-muted">Presiona el botón para editar</div>
+                  </div>
+                  <div class="col-md-2">
+                    <button data-toggle="modal" data-info="password" data-target="#editInfoModal" class="btn edit-info btn-outline-success lh-0"><i style="margin-right:0" class="fas fa-wrench"></i></button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="row">
+                  <div class="col">
                     <p>Miembro desde:</p>
                   </div>
                   <div class="col">
@@ -209,7 +237,7 @@ if (!isset($_SESSION["user_name"])) {
             </button>
           </div>
           <div class="modal-body">
-            <input type="text" id="modal-data" class="form-control" placeholder="Ingresa tu nuevo nombre de usuario">
+            <input type="text" id="modal-data" class="form-control" placeholder="Ingresa nuevo dato">
             <div style="display: none" class="alert alert-danger"></div>
           </div>
           <div class="modal-footer">
